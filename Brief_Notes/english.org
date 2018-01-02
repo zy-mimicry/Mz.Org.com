@@ -1,0 +1,279 @@
+
+* Quick notes
+
+** DONE [#C] Study English                                         :english:
+   CLOSED: [2017-12-27 三 10:16]
+
+  - 规律
+  常用前缀不超过10个
+  a - 否定前缀
+  n 和 d 都是辅音 有的时候在一起是可以省略一个的
+  gray -- grey 当原因字母发音相同的时候,转换后的意思也是差不多的
+  造词的一个方法: 辅音不变,元音降级 -- band --> bound
+  ant -- 形容词后缀
+  bund -- 词根, 捆绑
+  英语中造词时省略字母,有时候就是为了好读
+
+  - 单词
+  _band_ - n. 布带,乐队,波段 ；v. 绑副
+  abandon - vt. 放纵, 离弃, 放弃
+  bandage - n. 绷带 v. 用绷带绑住
+  ban - n.禁令 v.禁止, 简写的band
+  bond - n. 结合物, 粘和剂, 债券
+  boundary - n.边界
+  abound - v. 大量存在 with
+  abundant - adj. 丰富的,大量存在的;
+  abundance - n.丰富,充足;
+  bund - 词根 捆绑
+  bundle - n. 捆绑
+  bunch - n. 一困
+
+  slogan n. 标语
+  logo n. 标识
+  banner n. 旗帜
+
+  band
+  bound
+
+  grey -- 都是灰色
+  gray
+
+  same -- 同样的
+  resemble -- 类似的
+
+  stand -- 站住
+  astound -- 使惊讶
+  astonish -- vt. 使惊讶
+
+  band aid 邦迪
+  band - n. 布带；v. 绑副 
+  abandon - 放纵
+
+  bandage n. 绷带
+  banner 旗帜
+  photo 一般以o结尾的单词是'图'的意思
+  slogon 标语
+  logo 就是标识图
+
+  - 默写
+  _band_
+  abandon
+  bond
+  bound
+  abound
+  abundant
+  abundance
+  abundary
+  banner
+  bandage
+  ban
+  bund
+  bundle
+  bunch
+
+  gray
+  grey
+
+  same
+  resemble
+
+  stand
+  stound
+  astonish
+
+  banner
+  logo
+  photo
+  slogon
+  
+ - 扩展
+   
+** DONE [#C] The second day for english                            :english:
+   CLOSED: [2017-12-27 三 10:45] DEADLINE: <2017-12-27 三 10:20> SCHEDULED: <2017-12-27 三 09:45>
+   + 规律
+     - b & w 在音质上很相似
+     - ab 远离 away 远离
+     - db 两个字母并不能和在一起,没有办法读
+     - 前缀喜欢以o字母结尾
+     - 造新词,原因你降级是很常见的 a e i o u
+     - ant 常做形容词后缀, ate 常做动词后缀
+     - pre- 前缀, 之前
+     - a- 前缀的常用法: [1] 否定前缀 [2] 加强语气 引申含义
+     - 单词版的轻辅音 , 词根版本的浊辅音
+       - t -> d
+       - k -> g
+       - s -> z
+       - f -> v
+       - p -> b
+     - 单词短,意思简练; 单词长,意思深刻;
+     - ent - 常做形容词后缀
+     - ent --> ence ant --> ance ant --> ate ent --> ete??
+     - able 常用来做形容词后缀 --> 表示'能力'的形容词 ile 是简单版本的,也是表示'能力'的形容词后缀
+     - ize 常用,也是比较少的动词后缀,形容词动词化
+     - 复合名词后缀 ate + ion = ation
+     - ex- 前缀 : 向外 但是x经常被省略
+     - 前缀总是表示方向,就像上面的例子
+     - ous - 常用形容词后缀
+     - h -字母喜欢不发音,组合单词的时候,也常常省略掉
+   + 单词
+     - _home_ : adj.家的, n.家 ad. 在家
+     - howework : n.家庭作业
+     - homo - : 词根, 共同
+     - homogeneous : adj.同种类的
+     - _dome_ : n.园屋顶
+     - master : n.主人,师傅,硕士; v.掌握,控制;-> mest 造词的时候可能用到
+     - domestic : adj.家里的,本国的,训养的;
+     - dominant : adj.占优势的,有支配地位的
+     - dominate : v.支配,控制
+     - predominant : adj.最显著的,突出的,占最大优势的
+     - domain : n. 领域，范围
+     - _bite_ : v.咬;ｎ.一口
+     - abide : vi. 坚持，　vt.容忍
+     - obey : v.顺从，服从
+     - obedience : n.服从，顺从
+     - obedient : a. 顺从的，服从的
+     - _able_ : adj. 有能力
+     - ability : n. 能力，才能
+     - no : 不，否定　no + ever = never no + light = night no + one = none
+     - _or_ : conj 或，或者
+     - nor : 也不，也没有　no + or
+     - norm : n.标准，规范
+     - normal : adj.标准的，正常的
+     - abnormal : adj. 异常的
+     - normalize : v. 使标准化
+     - normalization : n. 标准化
+     - enormous : adj. 巨大的，庞大的；　ex + norm + ous ex- 向外
+     - _either_ : 两者之一，　也（不）　either or 
+     - neither : 两者都不 neither nor
+     - neutral : adj.中立的，中性的　neutr－词根: 中间
+   + 默写
+     + home
+     + homework
+     + homo-
+     + homogeneous
+     + dome
+     + domestic
+     + dominant
+     + dominate
+     + dominance
+     + domain
+     + master
+     + bite
+     + abide
+     + obey
+     + obedient
+     + obedience
+     + no
+     + or
+     + nor
+     + neither
+     + norm
+     + normal
+     + abnormal
+     + normalize
+     + normalizaiton
+     + enormous
+     + neither
+     + neutral
+     + able
+     + ability
+   + 扩展
+     + 
+ 
+  [2017-12-26 二 13:50]
+
+** DONE [#C] Study English the 03 day.                       :english:study:
+   CLOSED: [2017-12-29 五 15:35]
+
+   - 规律
+     - 汉字一般看型,英语看读音来区分单词之间是否有关系,这是常见的规律,当不好读的时候也可以改,但少见.
+     - em 一般等于 in 前缀
+     - ass 驴 ; 屁股 这个是形象的动物定位
+     - ary 和 ery 都有表示集合型后缀的功能
+     - 英语单词的大规律: 反意同源
+     - ity 常用的名词后缀
+     - ish 常用的动词后缀
+   - 单词
+     - borad n.板子,甲板;在船上;
+     - aboard 在船上,在甲板上
+     - boat n.船
+     - oar n.船浆 v.划船
+     - broad adj.宽广的,宽的;
+     - abroad 广泛, 在传播
+     - broadcast v/n. 广播
+     - cupboard n. 小厨,碗柜
+     - keyboard n.键盘
+     - bar n.小木条
+     - barrel n.桶, 枪管
+     - barrier n.栅栏
+     - embarrass vt.使困囧
+     - bat n.棒子
+     - battle n.战役
+     - battery n.电池组
+     - combat n.战斗
+     - debate v/n 争论,辩论
+     - stand v.站立
+     - stab v.刺.戳
+     - stable v.稳定的
+     - stabilty n.稳定
+     - establish v.建立.设立
+     - establishment n.建立,设立
+     - abolish v.废弃,废除
+     - obsolete a.已经废弃的,过时的
+     - fire n.火,v.解雇
+     - hire n.雇佣
+     - wild a 野蛮的
+     - mild a 温柔的
+   - 默写
+     - board
+     - keyboard
+     - cupboard
+     - aboard
+     - boat
+     - bat
+     - bar
+     - oar
+     - barrier
+     - barrel
+     - combat
+     - battle
+     - debate
+     - embarrass
+     - broad
+     - abroad
+     - broadcast
+     - battery
+     - stand
+     - stab
+     - stable
+     - stablity
+     - establish
+     - establishment
+     - abolish
+     - obsolete
+     - fire
+     - hire
+     - wild
+     - mild
+  [2017-12-28 四 16:19]
+
+** TODO [#C] Study English the 04 day                        :english:study:
+   - 规律
+     - ab 并不总是表示 远离,否定; 还表示加强语气 引申化
+     - ity 常用来做表示 性质的名词后缀
+     - re- 前缀,再一次
+     - y 也用来做名词后缀
+     - inter - 在中间
+     - dis - 也有两个含义,一个是不 ; 一个是将单词引导向负面含义.
+     - co - m/... 就是和连续两个辅音字母 其实就是 com + 辅音 为了好读然后修改的. 也表示共同,全
+     - 后缀一般喜欢 元音字母开头
+     - 单词造词根的时候,喜欢 元音降级,然后辅音使用t,当然并不全是.
+     - en 后缀,表示使动 , shorten loosen
+     - 当 v 不能衔接 t 的时候, 应该使用 u 完成, 因为 u w v 是经常切换的.
+     - ute - 常做名词后缀, 也有的时候做形容词后缀
+     - re - 前缀, 往回, 再次
+   - 单词
+   - 默写
+ 
+  [2017-12-29 五 15:58]
+
