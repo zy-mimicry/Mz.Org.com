@@ -1,4 +1,5 @@
 #+title: <鸟哥网络篇> 第一节课 架站之前所需要的技能分析
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../template/org.style.css"/>
 
 * 使用linux来假设网站是一个不错的选择,稳定且强大
 
