@@ -5,10 +5,9 @@
 
 ** 引用网上的网能Makefile
 
-#+BEGIN_EXAMPLE
-
+   #+BEGIN_SRC makefile
 ####################################################
-# Generic makefile - 万能Makefile
+# Generic makefile - awesome Makefile
 # for compiling and linking C++ projects on Linux 
 # Author: George Foot  Modified:Jackie Lee
 ####################################################
@@ -82,21 +81,23 @@ info:
         @echo $(DEPS)
         @echo $(MISSING_DEPS)
         @echo $(MISSING_DEPS_SOURCES)
+   #+END_SRC
 
-#+END_EXAMPLE
+-----
 
-** Makefile 常用函数
+** Makefile常用函数
 
-*** 
-    #+BEGIN_VERSE
+*** subst
+
+    #+BEGIN_EXAMPLE
     $(subst <from>,<to>,<text>)
 
     名称:字符串替换函数——subst。
     功能:把字串<text>中的<from>字符串替换成<to>。
     返回:函数返回被替换过后的字符串。
-    #+END_VERSE
+    #+END_EXAMPLE
 
-    #+BEGIN_EXAMPLE
+    #+BEGIN_VERSE
     示例:
     $(patsubst %.c,%.o,x.c.c bar.c)
     把字串“x.c.c bar.c”符合模式[%.c]的单词替换成[%.o],返回结果是“x.c.o bar.o”
@@ -110,12 +111,13 @@ info:
     “$(patsubst %<suffix>,%<replacement>,$(var))”。
     例如有:objects = foo.o bar.o baz.o,
     那么,“$(objects:.o=.c)”和“$(patsubst %.o,%.c,$(objects))”是一样的。
-    #+END_EXAMPLE
+    #+END_VERSE
 
 -----
-*** 
 
-    #+BEGIN_VERSE
+*** patsubst
+
+    #+BEGIN_EXAMPLE
     $(patsubst <pattern>,<replacement>,<text>)
 
     名称:模式字符串替换函数——patsubst。
@@ -126,8 +128,61 @@ info:
     (可以用“\”来转义,以“\%”
     来表示真实含义的“%”字符)
     返回:函数返回被替换过后的字符串。
+    #+END_EXAMPLE
+    
+    #+BEGIN_VERSE
+    示例:
+    $(patsubst %.c,%.o,x.c.c bar.c)
+    把字串“x.c.c bar.c”符合模式[%.c]的单词替换成[%.o],返回结果是“x.c.o bar.o”
+    备注:
+    这和我们前面“变量章节”说过的相关知识有点相似。
+    如:
+    “$(var:<pattern>=<replacement>)”
+    相当于
+    “$(patsubst <pattern>,<replacement>,$(var))”,
+    而“$(var: <suffix>=<replacement>)” 则相当于
+    “$(patsubst %<suffix>,%<replacement>,$(var))”。
+    例如有:objects = foo.o bar.o baz.o,
+    那么,“$(objects:.o=.c)”和“$(patsubst %.o,%.c,$(objects))”是一样的。#+BEGIN_VERSE
     #+END_VERSE
+
+-----
+
+*** strip
+
+    #+BEGIN_EXAMPLE
+    $(strip <string>)
+    名称:去空格函数——strip。
+    功能:去掉<string>字串中开头和结尾的空字符。
+    返回:返回被去掉空格的字符串值。
+    #+END_EXAMPLE
 
     #+BEGIN_VERSE
-
+    示例:
+    $(strip a b c )
+    把字串“a b c ”去到开头和结尾的空格,结果是“a b c”。
     #+END_VERSE
+
+-----
+
+*** findstring
+
+    #+BEGIN_EXAMPLE
+    $(findstring <find>,<in>)
+    名称:查找字符串函数——findstring。
+    功能:在字串<in>中查找<find>字串。
+    返回:如果找到,那么返回<find>,否则返回空字符串。
+    #+END_EXAMPLE
+
+    #+BEGIN_VERSE
+    示例:
+    $(findstring a,a b c)
+    $(findstring a,b c)
+    第一个函数返回“a”字符串,第二个返回“”字符串(空字符串)
+    #+END_VERSE
+
+-----
+
+** Makefile中特殊符号的解析
+    
+    
