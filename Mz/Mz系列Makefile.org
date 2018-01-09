@@ -1,9 +1,10 @@
 #+TITLE:Mz系列Makefile
+#+STARTUP: noindent
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../template/org.style.css"/>
 
 * Mz系列Makefile
 
-** 引用网上的网能Makefile
+** 引用网上的万能Makefile
 
    #+BEGIN_SRC makefile
 ####################################################
@@ -183,11 +184,10 @@ info:
 
 -----
 
-
 ** Makefile中特殊符号的解析
    
    - $^ :: 所有依赖列表
-	 - $< :: 依赖列表第一值
+	 - $< :: 依赖列表第一个值
 	 - $@ :: 目标列表
 
     
