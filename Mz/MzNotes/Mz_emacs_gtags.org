@@ -1,0 +1,121 @@
+#+TITLE: Emacs Gtags 笔记
+#+DATE:<2018-01-10 三> 
+
+* 使用Gtags的目的
+
+  - *很明显是要查看C/C++代码才使用的*
+  - 目前没有更好的选择,就先使用 _GNU-global_ 作为源码分析后端
+
+* 什么是Gtags
+
+  - =Gtags是GNU的一个开源项目,常用后端就是GNU-global=
+  - Jump: https://www.gnu.org/software/global/
+  - Jump: https://www.gnu.org/software/global/globaldoc_toc.html
+
+* Spacemacs中Gtags的使用方法
+
+** spacemacs 有两个前端可以使用
+   
+   + ggtags     :: https://github.com/leoliu/ggtags
+   + helm-gtags :: https://github.com/leoliu/ggtags/wiki/Use-ggtags-to-browse-Perl-projects
+
+** 选择的前端
+
+   其实,spacemacs中已经可以在layer中添加gtags层完成前面所说的前端加载.
+
+   由于目前使用的是helm套件,所以先选择helm-gtags完成统一操作.
+
+** helm-gtags使用方法 
+
+  : 顺便一提,helm-gtags可以支持后端使用ctags(Both exuberant ctags and universal ctags),原理上来讲是global支持ctags作后端.
+  : spacemacs中的 =C-u= 是 =SPC-u=
+
+  #+BEGIN_EXAMPLE
+  # exuberant ctags
+  % gtags --gtagslabel=ctags
+
+  # universal ctags
+  % gtags --gtagslabel=new-ctags
+  #+END_EXAMPLE
+
+  #+BEGIN_EXAMPLE
+    - gtags使用方法
+      - SPC-u :: Searches from specified directory
+      - SPC-u SPC-u :: Searches under current directory
+      - C-- :: Jump to symbol with other window
+  #+END_EXAMPLE
+*** 打开helm-gtags-mode
+    
+    - enale helm-gtags-mode
+  
+*** 创建源码解析库
+
+    -  cmd :: helm-gtags-create-tags
+    -  keybinding :: SPC m g c -- , g c
+
+*** 更新源码解析库
+
+    - cmd :: helm-gtags-create-tags
+    - keybinding :: SPC m g u -- , g u
+      - 默认更新当前文件
+      - SPC-u 前缀, 更新所有文件
+       
+*** 跳转栈的使用
+
+    - 列出所有已经跳转过的
+      - helm-gtags-show-stack :: , g S
+    - 向前跳
+      - helm-gtags-next-history :: , g n
+    - 向后跳
+      - helm-gtags-previous-history :: , g p
+
+*** 解析当前文件中的tag符号,类似函数和变量的跳转
+
+    - helm-gtags-parse-file :: , g l
+
+*** 查看当前光标所在函数的内部使用情况,并且可以配合helm跳转
+
+    - helm-gtags-tags-in-this-function :: , g i
+
+*** 查看当前光标下函数的被应用情况
+
+    - helm-gtags-find-rtags :: , g r
+
+*** 查看函数的定义
+
+    - helm-gtags-find-tag :: , g d
+    - helm-gtags-find-tag-from-here ::  , g D
+
+*** 重复上次的命令
+
+    - helm-gtags-resume :: , g R
+
+*** 清除各种东西,使用 =M-x=
+
+    - helm-gtags-clear-{you want}
+
+*** 找文件,打开文件
+
+    - 这个使用projectile插件更好
+
+*** 查找符号,查找字符串
+
+    - 这个使用ag完成,异步效果更好
+
+* 总结   
+  
+  - 总是使用spacemacs提供的 =,gg= 与 =,gG= 是很有用的
+  - 函数定义 =,gd= 函数被引用 =,gr= 函数引用谁 =,gi=
+  - 重复上次的gtags命令 =,gR=
+  - 查看跳转栈的方法 =,gS= 配合 =,gp= =,gn= =c-o=
+  - 当前文件中的符号 =,gl= 在特定的源文件中比 =SPC j i= 要好用
+  - 打开文件就使用 =projectile= 或者 =SPC f f=
+  - 查找字符串或者符号做好使用 =ag_(SPC s a p)= 这样的插件
+  - 创建,更新源码解析库 =,gc= =,gu=
+  
+  
+
+  
+
+
+
