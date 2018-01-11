@@ -1,0 +1,15 @@
+#+TITLE: Git 使用总结
+
+* git的权威链接 Pro Git
+
+  + 在线版本 :: http://git.oschina.net/progit/
+  + 本地版本 :: file://data/nishome/td/yang.zheng/self/my_books/git/
+
+* git的常用技巧
+
+** git 比较两次commit之间的差异,并生成patch
+
+   - git diff commit_1 commit_2 --stat
+   - git diff commit_1 commit_2 > patch.diff
+
+

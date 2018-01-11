@@ -1,0 +1,38 @@
+#+TITLE: CPP Programming
+#+DATE:<2018-01-11 四> 
+
+* Cpp推荐书籍
+
+** 欲读书籍
+
+*** Accelerated C++ 中文版
+    : 这本书很经典,可是不适合新手读,有一些编程经验的读者会收获很多
+*** The C++ Programming Language
+    : 这本书是C++作者的经典作品,做好看包括C++11的版本
+*** Generic Programming and the STL
+    : 这本书是讲解C++模板库的经典
+*** Ruminations On C++
+    : 这个是Accelerated C++的作者另一个经典作品,有设计模式和方法论
+
+* 读后反思
+
+** Accelerated C++ 中文版
+
+* Cpp编程常用札记
+
+** 常用头文件
+   
+   - iostream :: 常用的输入输出操作内容
+   - string :: 常用的字符串操作, getline函数是这个里面的
+   - iomanip :: 目前使用的setprecision(n)函数是这里面的
+   - algorethm :: 常用的算法都在这个头文件中
+   - ios :: streamsize这个类型定义在这个头文件中
+   - vector :: 这个是向量容器的头文件
+   - list :: 这个是链表容器的头文件
+   - map :: 这个是关联容器的头文件
+   - stdexcept :: 这个是异常相关的头文件
+   - 以C打头的头文件 :: 一般是C++实现兼容C功能的头文件  
+     + cctype :: 处理字符数据提供有用的函数 如:isspace isalpha isdigit etc..
+   - :: 
+
+
