@@ -19,7 +19,7 @@
 ** Accelerated C++ 中文版
 
    书目网站 这个好像是这本书的第二版
-   : Jump -> http://www.informit.com/store/accelerated-c-plus-plus-practical-programming-by-example-9780201703535
+   : Jump to -> http://www.informit.com/store/accelerated-c-plus-plus-practical-programming-by-example-9780201703535
 
 *** 书的思想
     
@@ -105,6 +105,148 @@
       3. 条件表达式中的数值转换
       4. 容纳对象长度应该使用哪个类型去承载.
       
+***** 使用顺序容器并分析字符串
+      
+      分割字符串:
+      #+BEGIN_EXAMPLE
+      string类,就可以想像成字符的容器.
+      字符操作最好使用cctype提供的字符操作.
+      
+      #+END_EXAMPLE
+
+      关于引用使用的一点思考:
+      #+BEGIN_EXAMPLE
+      引用一般使用的位置就是形参的传递,并且在函数中能够使用它修改指定对象的内容.
+      函数可以返回引用,但是要知道的是,这个引用必须是外面传进来的,想想为什么?
+      如果是内部的引用,出去了引用谁?答案就这么得到了.
+      #+END_EXAMPLE
+
+      关于指针和引用的一点思考:
+      #+BEGIN_EXAMPLE
+      引用是一个对象的别名,并不能嵌套,没有引用的引用!
+      指针是存储一个对象的地址,但是指针本身是一个变量,它的值是可以改变的.
+      指针可以嵌套,比如指针的指针,这很常见.
+      但是引用相当与一个常指针,指针的内容不能改变,但是指针指向的内容就是对象,可以改变的.
+      那么问题来了,我们是否能够获得引用的地址?并尝试修改它的内容?
+      #+END_EXAMPLE
+      
+      我们来看一个例子:
+      #+BEGIN_SRC c++
+      #include <iostream>
+
+      using namespace std;
+
+      int main (){
+        int a = 10;
+        int b = 20;
+
+        int& ai = a;
+        int& *p = &ai; // Error. 没有引用的指针,这是规定.
+        cout << *p << endl;
+
+        p = (int*)(0x20000); //其实这些都是徒劳的,没有办法改变的.
+        int** pp = &p; //这个也是一样的..
+        pp = (int**)(0x100000);
+
+        return 0;
+      }
+      #+END_SRC
+      
+      通过例子得到的解释:
+      #+BEGIN_EXAMPLE
+      其实很明显的知道,指针是一个变量!!!
+      指针的值如果不加限定是可以改变的,这只是给我们提供一个修改对象的契机.
+      指针可以获得地址,并且可以修改内容,但是不能修改地址!
+      地址是物理化的内容,每个存储单元在硬件上都有固定的地址,哪怕是通过映射也是有自己的地址的,不能改变.
+      #+END_EXAMPLE
+
+      对于函数返回值的思考:
+      #+BEGIN_EXAMPLE
+      返回值的类型是函数声明或者定义时赋予的.
+      返回值是有内存空间的,而且它的作用域并不是函数内,因为它是函数处理后生成的.
+      返回值是匿名的对象,这就又说明了 变量和对象的区别!
+      但是匿名对象是系统来管理的,如果返回值没有被使用,也不不会造成内存泄漏.
+      返回值,也就是匿名对象是可以使用的,就像正常的变量一样,只不过需要配合函数来用.
+
+      如:
+      double a = func() [n];
+      #+END_EXAMPLE
+
+      编程过程中的总结条目:
+      #+BEGIN_EXAMPLE
+      一定要知道自己所在的维度,不论是什么语言都要注意.
+
+      如:
+      vector<vector<vector<string>>>  -- 四层哦!
+      这里有很多曾,自己在使用的时候最好给一个好名字,不然会乱掉.
+      #+END_EXAMPLE
+      
+      容器的常用方法:
+      #+BEGIN_EXAMPLE
+      container<T>::iterator
+      container<T>::const_iterator
+      container<T>::size_type
+      
+      c.begin()
+      c.end()
+      c.rbegin()
+      c.rend()
+      c.size()
+      c.empty()
+      c.insert(d,b,e)
+      c.erase(it)
+      c.erase(b,e)
+      c.push_back(t)
+
+      container<T> c;
+      container<T> c(c2);
+      container<T> c(n); 初始化的方式按照元素区分.
+      container<T> c(n, t);
+      container<T> c(begin, end); 区间内的元素用来初始化
+      c = c2
+
+      支持随机访问的容器才能使用的:
+      c[n]
+
+      迭代器常用的操作:
+      *it
+      it->x
+      ++it;
+      it--;
+      b==e
+      b!=e
+      
+      string类提供的比较特殊的操作:
+      s.substr(i,j);
+      getline(cin,s);
+      s += s2; s += "fuck";
+      
+      vector类比较特殊的成员函数:
+      使用他们挽救向量内存的分配,也就是预置的内存分配.
+      v.reverse(n); 保留n个空间, 不会元素初始化,这个操作不会改变容器的大小,仅仅会影响insert和push_back的重复调用而分配内存的频率.
+      v.resize(n); 就像你想象的那样,修改v到新的长度.
+
+      list容器是为了高效地从任何位置插入和删除元素而别优化的,除了有vector的类似部分,还有
+      list.sort()
+      list.sort(cmp)
+
+      <cctype> 提供的函数:
+      isspace 判断空白字符
+      isalpha 判断字母字符
+      isdiagt 判断数字字符
+      isalnum 判断字母或数字
+      ispunct 判断标点符号
+      isupper 判断大写
+      islower 判断小写
+      toupper 产生大写字母字符
+      tolower 产生小写字母字符
+      #+END_EXAMPLE
+
+***** 使用库算法
+
+     如果使用库算法,那么头文件algorithm就是必须的!
+
+     
 
 **** 第二部分 定义属于自己的抽象
 
@@ -115,7 +257,7 @@
    - iostream :: 常用的输入输出操作内容
    - string :: 常用的字符串操作, getline函数是这个里面的
    - iomanip :: 目前使用的setprecision(n)函数是这里面的
-   - algorethm :: 常用的算法都在这个头文件中
+   - algorithm :: 常用的算法都在这个头文件中
    - ios :: streamsize这个类型定义在这个头文件中
    - vector :: 这个是向量容器的头文件
    - list :: 这个是链表容器的头文件
@@ -123,6 +265,28 @@
    - stdexcept :: 这个是异常相关的头文件
    - 以C打头的头文件 :: 一般是C++实现兼容C功能的头文件  
      + cctype :: 处理字符数据提供有用的函数 如:isspace isalpha isdigit etc..
-   - :: 
+   - ::
+   - ::
 
+** C/C++相关网站推荐
+
+   : 国人对C++的支持还是很好的,下面的网站有很多中文版本.
+   : 如果想要学习英语,潜移默化的提高能力,使用英文版本是一个不错的选择.
+
+*** c/cpp标准库在线查询网站,这个很有用,如果你经常用到的话:
+   http://en.cppreference.com/w/
+   http://zh.cppreference.com/w/
+
+*** 上面链接的具体部分,是search库的face:
+   http://en.cppreference.com/mwiki/index.php?title=Special%3ASearch&search
+   http://zh.cppreference.com/mwiki/index.php?title=Special%3A%E6%90%9C%E7%B4%A2&search
+
+*** 标准库离线版本下载地址:
+   http://en.cppreference.com/w/Cppreference:Archives
+   http://zh.cppreference.com/w/Cppreference:Archives
+
+*** C++官网
+
+   : 这个里面有最新的信息,还有论坛,注册后可以有更好支持哦
+   http://www.cplusplus.com/
 
