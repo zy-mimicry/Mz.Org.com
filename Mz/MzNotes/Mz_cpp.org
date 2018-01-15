@@ -242,13 +242,128 @@
       tolower 产生小写字母字符
       #+END_EXAMPLE
 
+
+***** 使用顺序容器并分析字符串 
+
+    如果你感觉对引用的概念很清晰,请看下面的例子:
+    #+BEGIN_SRC c++
+    static bool fgrade(Student_info& s){
+      return grade(s) < 60 ;
+    }
+
+    vector<Student_info> extract_fail(vector<Student_info>& s){
+      vector<Student_info> fail, pass;
+      for (vector<Student_info>::size_type i=0; i<s.size(); ++i){
+        if (fgrade(s[i]))
+          fail.push_back(s[i]);
+        else
+          pass.push_back(s[i]);
+      }
+      s = pass;
+      return fail;
+    }
+    #+END_SRC
+    测试样例:
+    #+BEGIN_SRC c++
+    #include <iostream>
+    int main (){
+      int a = 10;
+      int b = 20;
+      int& ai = a;
+      std::cout << ai << std::endl;
+      ai = b;
+      std::cout << ai << std::endl;
+    }
+    #+END_SRC
+
+    向量容器的特点:
+    #+BEGIN_EXAMPLE
+    向量容器是为了快速存取而优化的.
+    在向量结尾插入或者删除会很快.
+    在其他地方加入或者删除会很慢.
+    可以猜想,向量的索引速度快速,也是用了hash完成的,这些都是计算好的,为了快速读取使用的.
+    #+END_EXAMPLE
+
+    容器中的size成员函数通常是很快速的,可以经常使用,当然也要看情况.
+
+    迭代器的概念
+    #+BEGIN_EXAMPLE
+    一个迭代器是一个值,其实本质就是一个指针
+
+    它的作用:
+    识别一个容器,并且能够识别容器中的一个元素
+    让我们检查存储在容器中的值
+    提供操作来移动在容器中的元素
+    采用对应于容器所能够有效处理的方式来对可用的操作进行约束
+    #+END_EXAMPLE
+
+    一般索引的功能都可以使用迭代器来完成,如果有迭代器的话,当然C++中不推荐直接使用指针.
+
+    iterator 和 const_iterator 一般是容器的成员,这个成员定义了一个类型而已.
+
+    #+BEGIN_EXAMPLE
+    C++中的基本准则:
+    约束小的可以向约束强的类型转换,但是反过来就不可以.
+    #+END_EXAMPLE
+
+    作用于迭代器上的++操作,如 iter++ ,都是类中实现的重载运算,真正的元素可能并不挨着.
+
+    #+BEGIN_EXAMPLE
+    Note: . 的优先级比 * 要高
+    (*iter).name 等价于 iter->name
+    #+END_EXAMPLE
+
+    #+BEGIN_EXAMPLE
+    迭代器本质虽然是指针,但是通过C++语言的包装修饰,变得有很多类型,并且需要注意他们的操作.
+    如果容器中的迭代器不支持随机访问,那么就不能使用随机迭代器,但是顺序迭代器通过重载后是可以使用的.
+    我们没有必要为他们重载,因为他们的实现就是为了某方面的特殊功能.
+    #+END_EXAMPLE
+
+    list容器:
+    #+BEGIN_EXAMPLE
+    vector容器是为了随机访问而优化的,其实是类似数组的实现.
+    如果在容器中随机访问并操作元素或者顺序访问容器,那vector会比list快很多.
+    但是当大量的随机删除和插入操作被使用到容器时,list的速度明显会比vector快.(不在尾部)
+    list支持几乎所有的vector操作,但是不支持索引操作.
+    不用想也知道,vector和list的成员函数的实现是不同的.
+    #+END_EXAMPLE
+
+    一些关于vector和list的思考
+    #+BEGIN_EXAMPLE
+    就删除操作而言,他们的实现机制是有很大差别的:
+    list是链表,只是断开重连,其他迭代器的值是不会变化的.
+    vector是类似数组的容器,如果对他进行删除,那么删除元素后面的迭代器都无效了,这个是重新分配的.
+    所以,使用vector删除操作要小心迭代器的副本,可能根本不是我们想要的元素.
+
+    因为list并不支持完全的随机访问,也就是iter+n这样的操作不支持,所以不能使用std::sort函数.
+    目前支持sort的类型有 vector 和 string
+    但是,list提供了面向自己成员的成员函数sort,也可以满足我们遇到的问题.
+    #+END_EXAMPLE
+
+
 ***** 使用库算法
 
      如果使用库算法,那么头文件algorithm就是必须的!
-
-     
-
+        1. 操作数的优先级
+        2. 类型的自动转换
+        3. 条件表达式中的数值转换
+        4. 容纳对象长度应该使用哪个类型去承载.
+        5. 
+ 
 **** 第二部分 定义属于自己的抽象
+
+     : 由于第二部分的内容比较抽象,并不能简单描述,所以采用问答论述完成记录.
+
+***** 编写泛型函数
+
+      : Q. 什么是泛型函数?
+      #+BEGIN_VERSE
+      A. 
+      #+END_VERSE
+
+
+***** 使类对象像一个数值一样工作
+      
 
 * Cpp编程常用札记
 
