@@ -344,12 +344,73 @@
 ***** 使用库算法
 
      如果使用库算法,那么头文件algorithm就是必须的!
-        1. 操作数的优先级
-        2. 类型的自动转换
-        3. 条件表达式中的数值转换
-        4. 容纳对象长度应该使用哪个类型去承载.
-        5. 
- 
+
+     对于迭代器适配器的思考:
+     #+BEGIN_EXAMPLE
+     
+     #+END_EXAMPLE
+
+     C++中,static关键字的思考:
+     #+BEGIN_EXAMPLE
+     在类类型外面使用的static和C语言的基本一致.
+     在类中使用的static是表示类所有方法或者成员,是类共有的.
+     #+END_EXAMPLE
+
+     对回调函数传递参数的思考:
+     #+BEGIN_EXAMPLE
+     首先回调函数的实现是通过C语言的函数的指针来完成的.
+     一般使用函数指针作为参数来实现运行时链接.
+     不过c++有重载的特点,所以回调有比C更强大的特性.
+     
+     调用回调函数的函数,声明的时候就要指定回调函数的指针类型.
+     实际调用的使用只传入指针.
+     回调函数的参数是在调用回调函数的函数中实现传递的,这个参数也是该函数的参数中衍生的.
+     在find_if中,将b到e的迭代器挨个传递给p,迭代器指向的类型和p的参数是一样的,这是实现的规定,
+     当然在库中使用的是模板完成的.
+
+     如:
+      bool (*p)(char c);
+      find_if(b , e , p);
+      template< class InputIt, class UnaryPredicate >
+      InputIt find_if( InputIt first, InputIt last,
+                      UnaryPredicate p );
+
+      template<class InputIt, class UnaryPredicate>
+      InputIt find_if(InputIt first, InputIt last, UnaryPredicate p)
+      {
+          for (; first != last; ++first) {
+              if (p(*first)) { //看这里的实现!
+                  return first;
+              }
+          }
+          return last;
+      }
+     #+END_EXAMPLE
+
+     对逻辑流程的层级思考:
+     #+BEGIN_EXAMPLE
+     一般设计程序之初要对自己的程序有一个层级的概念.
+     哪一个层应该干什么,有什么工具可以使用,是否能实现都是要考虑到的.
+     设计代码的时候,专注的完成该层的实现
+     #+END_EXAMPLE
+
+     关于指针的下标解引用思考:
+     #+BEGIN_EXAMPLE
+     在C语言中下标和解引用是一样的概念,不过这里的引用不是c++里面的引用,还是有一些差别.
+     如果使用指针的话,最好使用同一种风格的编码方式,如:
+     
+     string s = "hello";
+     string* p = &s 或者 string::iterator p = s.begin();
+     
+     p[n] 等价于 *(p + n)
+     p[s.size()] 等价于 *(p + s.size())
+     #+END_EXAMPLE
+
+     void类型的思考:
+     #+BEGIN_EXAMPLE
+     
+     #+END_EXAMPLE
+           
 **** 第二部分 定义属于自己的抽象
 
      : 由于第二部分的内容比较抽象,并不能简单描述,所以采用问答论述完成记录.
@@ -380,7 +441,6 @@
    - stdexcept :: 这个是异常相关的头文件
    - 以C打头的头文件 :: 一般是C++实现兼容C功能的头文件  
      + cctype :: 处理字符数据提供有用的函数 如:isspace isalpha isdigit etc..
-   - ::
    - ::
 
 ** C/C++相关网站推荐

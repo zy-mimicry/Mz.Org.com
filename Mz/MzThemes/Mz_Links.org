@@ -1,0 +1,24 @@
+#+TITLE: 链接主题
+#+DATE:[2018-01-15 一]
+
+* C/CPP标准库链接                                                       :cpp:
+
+** c/cpp标准库在线查询网站,这个很有用,如果你经常用到的话:
+
+   http://en.cppreference.com/w/
+   http://zh.cppreference.com/w/
+
+** 上面链接的具体部分,是search库的face:
+
+   http://en.cppreference.com/mwiki/index.php?title=Special%3ASearch&search
+   http://zh.cppreference.com/mwiki/index.php?title=Special%3A%E6%90%9C%E7%B4%A2&search
+
+** 标准库离线版本下载地址:
+
+   http://en.cppreference.com/w/Cppreference:Archives
+   http://zh.cppreference.com/w/Cppreference:Archives
+
+** C++官网
+
+   : 这个里面有最新的信息,还有论坛,注册后可以有更好支持哦
+   http://www.cplusplus.com/
