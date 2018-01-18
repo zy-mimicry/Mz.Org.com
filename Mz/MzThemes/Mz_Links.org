@@ -22,3 +22,13 @@
 
    : 这个里面有最新的信息,还有论坛,注册后可以有更好支持哦
    http://www.cplusplus.com/
+
+* 算法链接
+
+** 算法好博客的链接(看点击率就知道他的厉害)
+
+   http://blog.csdn.net/v_JULY_v/article/
+
+*** 红黑树 
+
+    http://blog.csdn.net/v_JULY_v/article/details/6105630 

@@ -408,8 +408,108 @@
 
      void类型的思考:
      #+BEGIN_EXAMPLE
-     
+     返回值,和参数中使用
+     void func(void);
+     表示没有返回值,没有参数传递.
+
+     void类型可以承载其他的类型.
+     char* jim = "HH";
+     void* name = jim;
+
+     void类型可以强转为任意其他类型.
+     void* temp = &a;
+     int * b = (int *) temp;
      #+END_EXAMPLE
+
+     常用的库算法:(下面是书中使用的算法)
+     #+BEGIN_EXAMPLE
+     find(b, e, val)
+     find_if(b, e, p)
+     search(b, e, b2, e2)
+     copy(b, e, d)
+     remove_copy(b, e, t, val)
+     remove_copy_if(b, e, t, p)
+     remove_if(b, e, p) //原数组排序.
+     remove(b, e, val)
+     transform(b, e, t, f)
+     partition(b, e, p)
+     stable_partition(b, e, p) //顺序不变.
+     #+END_EXAMPLE
+
+***** 使用关联容器
+
+      关联容器,也叫关联数组,并不是C++内置的,而是标准库实现的.
+
+      常用的关联数组就是map,所在头文件是<map>.
+
+      关联数组是键值对.
+
+      关联数组的键不一定是整数,可以是任何可以比较的类型.
+
+      关联数组的排序是自动的,不能人为干涉.
+
+      关联数组和hash算法有关.
+      C++的关联数组使用的是'自平衡调节树'实现的.性能还不错.只是比最好的散列表结构稍慢.
+
+      关联数组的元素是pair类型. pair<const K,V>
+
+      使用关联数据就像其他语言一样,如果没有这个键,就会自动创建一个,并初始化它的值为空.
+
+      使用模板嵌套的时候注意:  
+      #+BEGIN_EXAMPLE
+      map<string, vector<int> > mm = xref(cin, split_v2);
+      这里的> > 要分开写!
+      #+END_EXAMPLE
+
+      循环输出的注意事项:
+      #+BEGIN_EXAMPLE
+      循环输出是代码中常见的内容,如果按照某个格式输出,可能要使用,或者:这样的字符隔开.
+      可以使用第一个元素特殊处理,或者最后一个元素特殊处理.
+      以后都使用第一个元素特殊处理:
+      #+END_EXAMPLE
+      如:
+      #+BEGIN_SRC c++
+      for (map<string, vector<int> >::iterator it = mm.begin();
+           it != mm.end();
+           ++it){
+        cout << setw(10) << it->first ;
+        vector<int>::iterator iter = it->second.begin();
+        cout << ":" << *iter;
+        ++iter;
+        while (iter != it->second.end()){
+          cout << "," << *iter;
+          ++iter;
+        }
+        cout << endl;
+      }
+      #+END_SRC
+
+      当类型名字比较长,或者嵌套类型比较多的时候,使用typedef是个不错的选择.
+      并且使用typedef可以解决map<string, vector<int> >这样的困扰.
+
+      对<cstdlib>中的rand()函数的思考:
+      rand()生成范围: [0,RAND_MAX)
+      #+BEGIN_EXAMPLE
+      rand()%n这个往往不能解决问题:
+      特例1.
+      当n是小整数的时候,n取2时,只有0和1可以选,产生的余数并不是绝对随机的.
+      特例2.
+      当n取20000时,10000%n 和 30000%n的结果是相同的,那概率是15000/n的两倍!
+
+      应该使用: 目的,产生一个[0,n)之间的随机数
+      使用这样的方法解决上面两种问题:
+
+      srand(time(0)) //这里很重要,需要这个随机数发生器才能产生随机数.
+      int backetsize = rand() / n;
+      int r ;
+      do r = rand() / backetsize;
+      while (r >= n);
+      return r;
+      
+      Note:根本没有使用%取余操作
+      
+      #+END_EXAMPLE
+      
            
 **** 第二部分 定义属于自己的抽象
 
@@ -417,11 +517,174 @@
 
 ***** 编写泛型函数
 
-      : Q. 什么是泛型函数?
-      #+BEGIN_VERSE
-      A. 
-      #+END_VERSE
+      迭代器的相关思考:
+      #+BEGIN_EXAMPLE
+      迭代器不是C++语言的一部分,是标准库抽象的一部分.
+      迭代器是一个实例化的类型,这个类型是迭代器模板.
+      C++标准库抽象了5种类型的迭代器.
+      #+END_EXAMPLE
 
+      std::sort函数的使用注意:
+      #+BEGIN_EXAMPLE
+      目前所接触的标准库中只有 vector和string支持.
+      #+END_EXAMPLE
+
+      所有标准库容器都满足正向迭代器的要求.
+      所有标准库容器都满足双向迭代器的要求.
+      通常我们不需要考虑输入和输出迭代器,除非自己实现某些功能.
+
+      为什么要有输入和输出迭代器:
+      #+BEGIN_EXAMPLE
+      原因在于,并不是所有迭代器都和容器关联的.
+      例子:
+      如果一个容器满足push_back,那么它也会满足back_inserter操作.
+      这个back_inserter操作就是一个输出迭代器,就是可以向他输出,但不支持其他迭代器的功能.
+      #+END_EXAMPLE
+
+      关于随机访问迭代器的思考:
+      #+BEGIN_EXAMPLE
+      list容器并不支持随机访问,查看它的内容只能遍历,因为它是链表的形式实现的.
+      随机访问的概念是可以实现在固定域内,如一个数组中,大幅度的跳转,如p+n这样.
+      #+END_EXAMPLE
+
+      流迭代器定义在<iterator>中,这里面还有很多迭代器适配器.
+      输入流迭代器的使用:
+      #+BEGIN_EXAMPLE
+      vector<int> v;
+      copy(istream_iterator<int>(cin), istream_iterator<int>(), back_inserter(v));
+      istream_iterator<int>() // 是文件末尾或者是处于错误的时候,可以和这个缺省值相等.
+      这里流迭代器是一个模板,需要指定流关联到哪个输入类型.
+      #+END_EXAMPLE
+
+      输出流迭代器的使用:
+      #+BEGIN_EXAMPLE
+      copy(v.begin(), v.end(), ostream_iterator<int>(cout, " ");
+      #+END_EXAMPLE
+
+      迭代器使用的例子:
+      #+BEGIN_SRC c++
+      for (vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+      for (vector<int>::iterator it(v.begin()); it != v.end(); ++it)
+      #+END_SRC
+
+      C++输入输出操作是带类型的操作!
+      #+BEGIN_EXAMPLE
+      getline(cin, s);
+      cin >> final >> midterm >> name >> endl;
+      这些类型是自动改变的.
+      #+END_EXAMPLE
+      所以C++的流迭代器是模板.
+
+      输入输出流使用模板迭代器的例子:
+      #+BEGIN_SRC c++
+      #include <iostream>
+      #include <vector>
+      #include <iterator>
+      #include <algorithm>
+      using namespace std;
+
+      int main (int argc, char** argv){
+
+        vector<string> s;
+        string temp;
+
+        copy(istream_iterator<string>(cin),
+             istream_iterator<string>(),
+             back_inserter(s));
+        copy(s.begin(), s.end(), ostream_iterator<string>(cout, ","));
+        cout << endl;
+
+        return 0;
+      }
+      #+END_SRC
+
+      以后的代码应该使用迭代器提高适应性.
+      思考,C++提供什么方法提高了代码的灵活性?
+      1. 模板,毋庸置疑, 模板函数,模板类.
+      2. 迭代器,(其实也是模板)
+      3. 重载,根据参数类型不同划分,不能用于回调.
+      4. 多肽,虚拟函数,指针,析构函数共同作用.
+      5. 继承,多重继承,避免重复的写类,并且扩展变容易.
+
+      模板函数的定义和声明:
+      template <class T> T func(const T& s);
+      template <class T> T func(const T& s){}
+
+      使用有返回值的模板函数:
+      double x = func<double>((double)m); // 明确的提供模板函数返回值的类型!
+
+      typename是在定义模板时使用模板类型中的类型,需要使用它声明!
+
+      类型匹配是编程语言的一种美学,这种对账的接口可以很好的使我们考虑问题.
+      
+***** 第九章 定义新类型
+      
+     在类内部调用同名的外部函数
+     #+BEGIN_SRC c++
+      #include <iostream>
+      #include <string>
+      using namespace std;
+      string printfm(string& name){
+        return name;
+      }
+
+      class Student_info{
+      public:
+        string printfm(){
+          return ::printfm(n); // 应该这样使用!
+        }
+        string name(){
+          return n;
+        }
+        void set_name(string& s){
+          n = s;
+        }
+      private:
+        string n;
+      };
+     #+END_SRC
+
+     在C++中,初始化一个对象时,最好明确初始化内部类型,否则该变量可能存储的是之前内存中的无用信息.
+     这很重要,因为自定义类型可以递归的调用构造,默认就可以,但是内部类型最好自己指定初始值.
+
+     类型调用构造函数初始化的时候,和正常的函数流程相似,如果有标准输入输出也是会有相应的动作.
+     #+BEGIN_SRC c++
+     class Student_info{
+     public:
+        Student_info(){}
+        Student_info(istream& in){read(in);}// 这里触发读取标准输入
+        string printfm(){
+          return ::printfm(n);
+        }
+        string name(){
+          return n;
+        }
+        void set_name(string& s){
+          n = s;
+        }
+        istream& read(istream& in){
+          in >> n ;
+          return in;
+        }
+      private:
+        string n;
+      };
+     #+END_SRC 
+
+     在c++中的struct和class的使用:
+     #+BEGIN_EXAMPLE
+     他们的差别仅仅在于第一个标号前面的内容是否是private的.(class就是private)
+     使用他们的方面:
+     1. 在对外开放的,如C语言中的struct一样,公用的结构可以使用它定义,一般也不给方法.
+     2. 如果是保护的,受限制的类型,需要使用class来定义.
+     这是不成文的规定.
+     #+END_EXAMPLE
+
+
+     构造函数的声明和定义和其他的函数有点不同:
+     #+BEGIN_SRC c++
+     
+     #+END_SRC
 
 ***** 使类对象像一个数值一样工作
       
@@ -465,3 +728,7 @@
    : 这个里面有最新的信息,还有论坛,注册后可以有更好支持哦
    http://www.cplusplus.com/
 
+
+** C++11提供的扩展
+
+   To be continued...
