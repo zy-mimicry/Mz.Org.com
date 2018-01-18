@@ -1,0 +1,9 @@
+#+TITLE: Org输出html格式文档所用配置
+
+* 最开始使用的官方模板(参考)
+
+  加入下面的内容到org文件头部:
+  #+BEGIN_SRC config
+  Usage:
+  #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="org.style.css"/>
+  #+END_SRC
