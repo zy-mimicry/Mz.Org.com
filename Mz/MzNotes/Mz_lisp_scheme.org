@@ -1,0 +1,27 @@
+#+TITLE: Lisp Scheme
+
+* 学习Lisp
+
+** Q: 为什么学习lisp?
+
+#+BEGIN_EXAMPLE
+Q: 为什么学习lisp?
+#+END_EXAMPLE
+
+#+BEGIN_EXAMPLE
+A: 其实本人学习lisp有几个强有力的理由:
+ - lisp是一门古老强大的语言,其语言基础并不难学,可以让自己将重点放在解决问题的算法或者方法上来.
+ - 本人使用emacs编辑器.
+#+END_EXAMPLE
+  
+
+* 与Lisp和scheme相关的链接                                :schemelinks:
+
+** SICP课程习题网站
+
+   - http://sicp.readthedocs.io/en/latest/ (这个链接是下面github的在线阅读文档)
+   - https://github.com/huangz1990/SICP-answers (github代码托管所在)
+
+** Lisp语言前卫者'田春'的采访
+
+   - https://segmentfault.com/a/1190000002433747
