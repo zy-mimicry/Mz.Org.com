@@ -1,0 +1,4 @@
+* C语言链表的实现                                                      :list:
+#+BEGIN_SRC c
+void main (){}
+#+END_SRC

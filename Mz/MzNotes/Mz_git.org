@@ -7,9 +7,25 @@
 
 * git的常用技巧
 
-** git 比较两次commit之间的差异,并生成patch
+** git diff                                                          :git:diff:
 
-   - git diff commit_1 commit_2 --stat
-   - git diff commit_1 commit_2 > patch.diff
+   #+BEGIN_EXAMPLE
+   D: git 比较两次commit之间的差异,并生成patch
+   #+END_EXAMPLE
 
+   #+BEGIN_SRC sh
+   #T:
+   git diff commit_1 commit_2 --stat
+   git diff commit_1 commit_2 > patch.diff
+   #+END_SRC
+
+** git checkout                                                :git:chekout:
+
+   #+BEGIN_EXAMPLE
+   D: 共基线开发的项目中,通常有很多分支,如何切换分支并跟新该分支的代码,完成修改并提交? 
+   #+END_EXAMPLE
+
+   #+BEGIN_SRC sh
+   git checkout -b [新建本地分支名] [远程仓库名]/[远程分支名]
+   #+END_SRC
 

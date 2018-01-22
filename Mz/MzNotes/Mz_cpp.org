@@ -700,9 +700,10 @@
    - list :: 这个是链表容器的头文件
    - map :: 这个是关联容器的头文件
    - stdexcept :: 这个是异常相关的头文件
+   - fstream :: 这个头文件定义了ifstream和ofstream这样的,常与文件相关的流类型.
    - 以C打头的头文件 :: 一般是C++实现兼容C功能的头文件  
      + cctype :: 处理字符数据提供有用的函数 如:isspace isalpha isdigit etc..
-   - ::
+     + cstddef :: 类似size_t,ptrdiff_t这种无符号类型定义在这里
 
 ** C/C++相关网站推荐
 
