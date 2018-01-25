@@ -1,0 +1,39 @@
+#+TITLE: Cpp编程难点剖析
+
+* 语法部分                                           :cpp_difficulty_grammar:
+
+** Description: C++中模板类的声明和定义分开在不同的文件中定义,不能正常编译问题
+
+ _Thinking_ : 这个问题很重要,并且很难找到问题的所在,首先给出这个问题的两个解决方案
+ #+BEGIN_EXAMPLE
+ 1. 关于模板类的声明和定义请在一个文件中完成,否则链接报错
+ 2. 如果你知道模板类的使用方面,可以在.cpp文件中加上template class Vec<string>;
+ #+END_EXAMPLE
+
+ 在一个文件中生命和定义,不能分开:
+ #+BEGIN_SRC c++
+ //文件Vec.h中
+ template <class T> class Vec{
+ Vec();
+ };
+ 
+ template <class T> Vec<T>::Vec(){}
+ #+END_SRC
+
+ 如果你明白自己在做什么,可以取巧:
+ #+BEGIN_SRC c++
+ //文件Vec.h中
+ template <class T> class Vec{
+ Vec();
+ };
+ //文件Vec.cpp中
+ #include <string>
+ template <class T> Vec<T>::Vec(){}
+ template class Vec<string> ; //如果这个模板需要的是string
+ #+END_SRC
+
+ 下面的链接可以有详细的说明: \\
+ https://www.zhihu.com/question/20630104
+
+
+* 模式部分

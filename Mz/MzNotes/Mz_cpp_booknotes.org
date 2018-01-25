@@ -679,12 +679,6 @@
      这是不成文的规定.
      #+END_EXAMPLE
 
-
-     构造函数的声明和定义和其他的函数有点不同:
-     #+BEGIN_SRC c++
-     
-     #+END_SRC
-
 ***** 使类对象像一个数值一样工作
       
 * Cpp编程常用札记
@@ -701,6 +695,7 @@
    - map :: 这个是关联容器的头文件
    - stdexcept :: 这个是异常相关的头文件
    - fstream :: 这个头文件定义了ifstream和ofstream这样的,常与文件相关的流类型.
+   - memory :: 与C++动态分配内存相关的方法类在这里,如allocator
    - 以C打头的头文件 :: 一般是C++实现兼容C功能的头文件  
      + cctype :: 处理字符数据提供有用的函数 如:isspace isalpha isdigit etc..
      + cstddef :: 类似size_t,ptrdiff_t这种无符号类型定义在这里
