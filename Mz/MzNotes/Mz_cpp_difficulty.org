@@ -2,38 +2,87 @@
 
 * 语法部分                                           :cpp_difficulty_grammar:
 
-** Description: C++中模板类的声明和定义分开在不同的文件中定义,不能正常编译问题
+** =Description := C++中模板类的声明和定义分开在不同的文件中定义,不能正常编译问题
 
- _Thinking_ : 这个问题很重要,并且很难找到问题的所在,首先给出这个问题的两个解决方案
- #+BEGIN_EXAMPLE
- 1. 关于模板类的声明和定义请在一个文件中完成,否则链接报错
- 2. 如果你知道模板类的使用方面,可以在.cpp文件中加上template class Vec<string>;
- #+END_EXAMPLE
+*** _Thinking_ : 这个问题很重要,并且很难找到问题的所在,首先给出这个问题的两个解决方案
 
- 在一个文件中生命和定义,不能分开:
- #+BEGIN_SRC c++
- //文件Vec.h中
- template <class T> class Vec{
- Vec();
- };
- 
- template <class T> Vec<T>::Vec(){}
- #+END_SRC
+    1. 关于模板类的声明和定义请在一个文件中完成,否则链接报错
+    2. 如果你知道模板类的使用方面,可以在.cpp文件中加上template class Vec<string>;
 
- 如果你明白自己在做什么,可以取巧:
- #+BEGIN_SRC c++
- //文件Vec.h中
- template <class T> class Vec{
- Vec();
- };
- //文件Vec.cpp中
- #include <string>
- template <class T> Vec<T>::Vec(){}
- template class Vec<string> ; //如果这个模板需要的是string
- #+END_SRC
+    在一个文件中生命和定义,不能分开:
+    #+BEGIN_SRC c++
+     //文件Vec.h中
+     template <class T> class Vec{
+     Vec();
+     };
 
- 下面的链接可以有详细的说明: \\
- https://www.zhihu.com/question/20630104
+     template <class T> Vec<T>::Vec(){}
+    #+END_SRC
 
+    如果你明白自己在做什么,可以取巧:
+    #+BEGIN_SRC c++
+     //文件Vec.h中
+     template <class T> class Vec{
+     Vec();
+     };
+     //文件Vec.cpp中
+     #include <string>
+     template <class T> Vec<T>::Vec(){}
+     template class Vec<string> ; //如果这个模板需要的是string
+    #+END_SRC
+
+    下面的链接可以有详细的说明: \\
+    https://www.zhihu.com/question/20630104
+
+
+** =Description := explicit关键字和自动类型转换的理解
+
+*** _Thinking:_ 自动隐式的类型转换是很方便的,但也是很危险的.
+
+    需要了解的事实:
+    1. explicit 关键字只用来修饰构造函数,修饰其他函数有什么意义呢?
+    2. 被explicit关键字修饰的 *转换构造* 是不能发生隐式转换的.
+
+    C++中， 一个参数的构造函数(或者除了第一个参数外其余参数都有默认值的多参构造函数),承担了两个角色:
+    1. 是个构造
+    2. 是个默认且隐含的类型转换操作符
+
+
+    如何判断使用explicit关键字的时机?
+    1. 当构造的参数需要作为对象的一部分时,不需要声明为 explicit
+    2. 当构造函数的参数只决定对象的结构(如个数),但不是对象的内容的时候,需要添加explicit.
+    
+    Note: 需要知道的是, 当类的构造的声明和定义不在一起的时候,explicit关键字只能用在声明中!
+       
+    一个好例子:
+    #+BEGIN_SRC c++
+    #include <iostream>
+    using namespace std;
+    class Test1
+    {
+    public :
+      Test1(int num):n(num){}
+    private:
+      int n;
+    };
+    class Test2
+    {
+    public :
+      explicit Test2(int num):n(num){}
+    private:
+      int n;
+    };
+
+    int main()
+    {
+      Test1 t1 = 12; // 可以隐式转换
+      Test2 t2(13); //显示构造
+      Test2 t3 = 14; //error , 不能隐式转换
+
+      return 0;
+    }
+    #+END_SRC
 
 * 模式部分
+
+  
