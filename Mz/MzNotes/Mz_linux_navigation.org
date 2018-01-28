@@ -1,0 +1,45 @@
+#+TITLE: Linux导航
+
+** =Description := 如何查看内核源码?                              :linuxdoc:
+
+***  _Thinking :_ 记录查看内核源代码技巧
+
+    内核源码四法宝:
+    1. 内核相关模块的文档 (详细的介绍)
+    2. 相关模块的README (简单的介绍,如果有的话)
+    3. 相关模块的Kconfig
+    4. 相关模块的Makefile
+
+       
+    
+
+** =Description := Linux话题的链接                              :linuxlinks:
+
+*** _Thinking :_ 记录linux内核常用链接
+
+    内核主页:(一般这个就够了)
+    https://www.kernel.org/
+
+    内核文档搜索:
+    https://www.kernel.org/doc/html/latest/search.html?q=exit_file&check_keywords=yes&area=default#
+
+    嵌入式内核的wiki:
+    https://elinux.org/Main_Page
+
+
+    内核邮件列表:
+    http://vger.kernel.org/
+
+    Linux和BSD内核的技术新闻.如果没时间跟踪LKML,那么经常浏览kerneltrap是个好主意.
+    http://kerneltrap.org
+
+    Linux weekly news，创建于1997年底的一个Linux新闻站点。
+    http://lwn.net/
+
+    这是内核开发的中文邮件列表，里面活跃着很多内核开发领域的华人，比如Herbert Xu,、Mingming Cao、Bryan Wu等.(可能被禁了)
+    http://zh-kernel.org/mailman/listinfo/linux-kernel
+
+    全球最大的Linux/Unix中文技术社区(可能被禁了)
+    http://linux.chinaunix.net/
+ 
+

@@ -1,0 +1,12 @@
+#+TITLE: Linux Tips
+
+** Q: 如何手动修改内核最大线程数目?
+
+*** A: 通过内核引出的节点操作
+
+    #+BEGIN_EXAMPLE
+    修改位置: /proc/sys/kernel/pid_max 
+    代码修改位置: <linux/threads.h>
+    #+END_EXAMPLE
+
+** Q: 
