@@ -1,6 +1,13 @@
 #+TITLE: 链接主题
 #+DATE:[2018-01-15 一]
 
+* 好的链接仓库
+
+** github上一位热心的朋友分享自己的知识链接
+
+    https://github.com/jiangxincode/cnblogs
+   
+
 * C/CPP标准库链接                                                       :cpp:
 
 ** c/cpp标准库在线查询网站,这个很有用,如果你经常用到的话:

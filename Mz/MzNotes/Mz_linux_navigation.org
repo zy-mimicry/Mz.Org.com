@@ -1,6 +1,14 @@
 #+TITLE: Linux导航
 
-** =Description := 如何查看内核源码?                              :linuxdoc:
+: 这篇文档主要介绍的内容
+#+BEGIN_EXAMPLE
+1. 内核文档导航和切入的技巧
+2. 内核相关的辅助链接内容
+3. 内核代码定位的正则技巧和方法
+4. 特定代码位置简介
+#+END_EXAMPLE
+
+** =Description := 如何查看内核源码?
 
 ***  _Thinking :_ 记录查看内核源代码技巧
 
@@ -10,10 +18,57 @@
     3. 相关模块的Kconfig
     4. 相关模块的Makefile
 
-       
+** =Description := Linux源码查看切入点分析
+
+*** _Thinking :_ 下面记录一下如何开始查看linux内核源码
+
+    内核源码是很庞大的,就现在来看,那么在看一个工程的代码时,需要一定的技巧来看源码:
+    1. 首先通过文档或者书籍了解相关模块的知识.
+    2. 使用上面的如何查看内核源代码的技巧索引到想要分析的模块.
+    3. 其次根据文档或者书籍找到模块的关键数据结构,主要分析
+    4. 找到模块相关的头文件来分析数据结构相关的操作内容.
+
+    : 需要的资料有
+    内核文档,书籍,Kconfig makefile 头文件,最后是源文件.
+ 
+** =Description := Linux内核代码正则索引定位技巧
+
+*** _Thinking :_ 这个内容可能需要不停的更新,下面就是一些例子
+
+    正则表达式的学习是很重要的,可以学习perl的正则,全面而优雅.
+    
+    使用正则的习惯事项注意:
+    #+BEGIN_EXAMPLE
+    括号索引需要反引 : \( \) \{ \}
+    #+END_EXAMPLE
+
+    系统调用的查询:
+    : SYSCALL.*getpid
+
+    内核符号导出的查询:
+    : EXPORT.*sprintf\)
     
 
-** =Description := Linux话题的链接                              :linuxlinks:
+** =Description:= Linux特定代码位置简介
+
+*** _Thinking :_ 内核中代码规划是有张可循的,所以仅以此记录
+
+    linux代码中权能相关的列表位置:
+    <linux/capability.h>
+
+    linux系统调用号位置
+    <asm/unistd.h>
+
+    linux大部分系统调用源码的实现在:
+    kernel/sys.c
+
+    linux链表实现位置:
+    <linux/list.h>
+    
+    linux队列的实现位置:
+    <linux/kfifo.h>
+
+** =Description := Linux话题相关链接
 
 *** _Thinking :_ 记录linux内核常用链接
 
@@ -41,5 +96,3 @@
 
     全球最大的Linux/Unix中文技术社区(可能被禁了)
     http://linux.chinaunix.net/
- 
-

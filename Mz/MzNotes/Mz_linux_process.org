@@ -1,0 +1,21 @@
+#+TITLE: Linux Process
+
+: Linux Kernel version []
+
+* linux 进程的创建
+
+** D: linux 普通进程的创建流程
+*** T: 代码调用流程如下
+    
+** D: linux 内核线程的创建流程
+*** T: 
+
+* linux 新进程的装载
+** D: exec()系统调用流程
+* linux 进程的销毁
+** D: exit()调用流程
+* linux 进程的状态设置
+** D: set_task_state()调用流程
+* linux 进程的使用
+** D: 如何使用linux进程? 给出例子
+

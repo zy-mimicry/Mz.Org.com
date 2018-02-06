@@ -1,0 +1,149 @@
+#+TITLE: Linux Mutt Email
+
+: 有空再弄这个问题.目前先使用雷鸟!
+
+* 需要的功能介绍
+
+** 需要能够在新邮件来的时候,提醒我
+** 需要能够将服务器的邮件转储的到本地
+** 需要能够在本地将存储的邮件分类
+** 需要能够根据不同的邮件放入不同的mbox内
+** 需要批量操作
+** 需要强大的查询搜索能力
+** 需要能够正常显示邮件内容
+
+*** 正常显示html内容的配置
+
+    File: .muttrc
+    #+BEGIN_EXAMPLE
+    alternative_order text/plain text/enriched text/html
+    auto_view text/html
+    #+END_EXAMPLE
+
+    File: .mailcap
+    #+BEGIN_EXAMPLE
+    ext/html; /usr/bin/w3m -I %{charset} -T text/html; copiousoutput;
+    #+END_EXAMPLE
+
+** 需要能够正常显示附件内容
+** 需要能够添加CC用户
+
+* 扩展的功能 
+
+** 记录配置内容:
+
+*** .muttrc
+
+    #+BEGIN_EXAMPLE
+    #Email -- Mutt
+    #账户设置内容
+    set realname = "mzZ"
+    set from = "yang.zheng@mmm.com"
+    set use_from = yes
+    set envelope_from = yes
+
+    #使用内部的IMAP service完成接收邮件
+    set imap_user = 'tct-mm\yang.zheng'
+    set imap_pass = 'tcl##0099mm'
+
+    ##设置远程服务器文件夹
+    set folder = "imaps://mailsz.tct.tcl.com.mm"
+    set spoolfile = "+INBOX"
+    mailboxes = +INBOX
+    set postponed = "+[Gmail]/Drafts"
+
+    ##允许mutt自动创建一个新的imap连接
+    unset imap_passive
+
+    ##imap连接保持时间
+    set imap_keepalive = 300
+
+    #Local email文件夹管理
+
+    # 设置TLS验证
+    # set certificate_file = /etc/ssl/certs/ca-certificates.crt
+
+    ##本地缓存目
+    录
+    set header_cache = ~/.mutt/cache/headers
+    set message_cachedir = ~/.mutt/cache/bodies
+
+    ##使用msmtp
+    set sendmail = "/usr/bin/msmtp"
+    ##设置内建smtp,这里我们不使用
+    #set smtp_url = "smtps://mailsz.tct.tcl.com:25/"
+    #set smtp_pass = "tcl##0099"
+    #set ssl_starttls = yes
+    #
+
+
+    # 退出提醒
+    set quit = ask-yes
+
+    # 回信包含原文
+    set include
+
+    # 设置回信引文之前的插入符号
+    set indent_str = "> "
+
+    # 设置邮件头
+    my_hdr From: yang.zheng@tcl.com
+
+    # 邮件打分
+    score "~N" +4
+    score "~s 通知" +2
+    score "~D" -5
+    score "~O" +1
+    score "~s believe" -10
+
+    # 排序方式
+    set sort = score
+
+    # 二级排序
+    set sort_aux = date
+
+    # 翻到最后一页不回到第一页
+    set pager_stop
+
+    # 快速回信
+    set fast_reply
+
+    # 删除邮件自动移动光标
+    set resolve = yes
+
+    # 发信使用的字符集
+    set send_charset = "us-ascii:iso-8859-1:gb18030:utf-8"
+
+    # 是否编辑邮件头
+    set edit_headers = no
+
+    # pager显示行数
+    set pager_index_lines = 4
+
+    #显示编码问题
+    alternative_order text/plain text/enriched text/html
+    auto_view text/html
+    #auto_view text/plain
+
+    # 使用solarized配色方案
+    source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
+    #+END_EXAMPLE
+
+*** .mailcap
+
+    #+BEGIN_EXAMPLE
+    ext/html; /usr/bin/w3m -I %{charset} -T text/html; copiousoutput; 
+    #+END_EXAMPLE
+
+*** .msmtprc
+
+    #+BEGIN_EXAMPLE
+    account default
+    host	mailsz.tct.tcl.com
+    user	tct-hq\yang.zheng
+    from	yang.zheng@tcl.com
+    password	tcl##0099
+    auth	login
+    tls		off
+    logfile		~/.msmtp.log
+    #+END_EXAMPLE
