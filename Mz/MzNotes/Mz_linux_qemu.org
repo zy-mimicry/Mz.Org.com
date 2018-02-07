@@ -1,0 +1,198 @@
+#+TITLE: Linux QEMU
+#+DATE: <2018-02-08 四>
+
+** 使用qemu搭建linux驱动开发环境
+
+*** 搭建使用的原料
+    
+**** ubuntu套件
+
+     : 目前使用14.04就可以完成,高版本也是可以的,不建议老版本尝试.
+     
+**** arm的交叉编译工具链
+
+     : 交叉编译,不用多说
+
+     安装方法:
+     sudo apt-get install gcc-arm-linux-gnueabi
+
+**** QEMU模拟器
+
+     : 使用新版本的qemu套件,这里是固定版本,如果喜欢的话,研究下qemu,然后弄最新的!
+     : qemu模拟得最好的arm芯片，要数ARM公司的vexpress A9开发板了!
+
+     下载方法:
+     wget http://wiki.qemu-project.org/download/qemu-2.0.2.tar.bz2 (固定版本,验证可用)
+     
+     : QEMU依赖
+     #+BEGIN_EXAMPLE
+      配置qemu前，需要安装几个软件包：
+      sudo apt-get install zlib1g-dev
+      sudo apt-get install libglib2.0-0
+      sudo apt-get install libglib2.0-dev 
+     #+END_EXAMPLE
+
+**** Linux内核版本
+     
+     : 使用的内核版本是3.16,测试通过
+     
+     下载内核代码的方法:
+     1. wget https://www.kernel.org/pub/linux/kernel/v3.x/linux-3.16.tar.xz (固定版本)
+     2. git clonegit://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git (还没有尝试过)
+
+     : 内核的编译环境就不用说了,如果不会的话,干这个就没有意义.
+
+**** Busybox
+
+     : 使用最新的busybox也是极好的,这里却使用了固定版本的busybox
+
+     下载方法:
+     wget http://www.busybox.net/downloads/busybox-1.20.2.tar.bz2 (固定版本,验证可用)
+
+*** 搭建步骤
+
+    : 当然了,这里的搭建步骤就是主要配置和编译,到最后的运行.
+
+**** 编译内核
+     
+     : 生成vexpress开发板子的config文件
+     #+BEGIN_EXAMPLE
+     配置
+     make CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm vexpress_defconfig
+     编译
+     make CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm
+     产物
+     arch/arm/boot/zImage
+     #+END_EXAMPLE
+     
+**** 编译安装QEMU
+     
+     : 依赖前面已经提到,这里写编译步骤
+     
+     方法:
+     #+BEGIN_EXAMPLE
+     ./configure --target-list=arm-softmmu --audio-drv-list=
+     make
+     make install
+     #+END_EXAMPLE
+
+     测试方法:(这个当然起不来系统,只是用来测试而已)
+     #+BEGIN_EXAMPLE
+     qemu-system-arm -M vexpress-a9 -m 512M -kernel /home/ivan/kernel_git/linux/arch/arm/boot/zImage -nographic -append "console=ttyAMA0"
+     #+END_EXAMPLE
+     
+     Note:
+     #+BEGIN_EXAMPLE
+     这里简单介绍下qemu命令的参数：
+
+    -M vexpress-a9 模拟vexpress-a9单板，你可以使用-M ?参数来获取该qemu版本支持的所有单板
+
+    -m 512M 单板运行物理内存512M
+
+    -kernel /home/ivan/kernel_git/linux/arch/arm/boot/zImage  告诉qemu单板运行内核镜像路径
+
+    -nographic 不使用图形化界面，只使用串口
+
+    -append "console=ttyAMA0" 内核启动参数，这里告诉内核vexpress单板运行，串口设备是哪个tty。 
+
+    注意：
+    我每次搭建，都忘了内核启动参数中的console=参数应该填上哪个tty，因为不同单板串口驱动类型不尽相同，创建的tty设备名当然也是不相同的。那vexpress单板的tty设备名是哪个呢？ 其实这个值可以从生成的.config文件CONFIG_CONSOLE宏找到。
+    如果搭建其它单板，需要注意内核启动参数的console=参数值，同样地，可从生成的.config文件中找到。 
+     #+END_EXAMPLE
+     
+
+**** 下载、编译和安装busybox
+
+     : 注意编译出来的busybox是给板子用的,要加宏!
+
+     安装步骤:
+     #+BEGIN_EXAMPLE
+     make defconfig
+     make CROSS_COMPILE=arm-linux-gnueabi-
+     make install CROSS_COMPILE=arm-linux-gnueabi- (这个宏很重要)
+     #+END_EXAMPLE
+
+**** 制作根文件系统
+
+     : 这个是必备的,内核有了,还是要有跟文件系统,如何内核找不到根文件系统,就无法启动init的进程!
+
+     摘录一些内容:
+     #+BEGIN_EXAMPLE
+     1. 根文件系统的内容
+     如果你看过《Linux From Scratch》，相信你会对这一步产生恐惧感，但如果一直从事嵌入式开发，就可以放下心来。
+     根文件系统就是简单得不能再简单的几个命令集和动态库而已。
+     为什么Linux From Scratch会有那么复杂，是因为它要制作出一个Linux发生版。但在嵌入式领域，几乎所有的东西，都是mini版本，根文件系统也不例外。
+
+     本文制本的根文件系统 = busybox(包含基础的Linux命令)  + 运行库 + 几个字符设备
+     #+END_EXAMPLE
+
+     #+BEGIN_EXAMPLE
+     2. 根文件系统放在哪里
+     其实依赖于每个开发板支持的存储设备，可以放到Nor Flash上，也可以放到SD卡，甚至外部磁盘上。最关键的一点是你要清楚知道开发板有什么存储设备.
+     本文直接使用SD卡做为存储空间，文件格式为ext3格式 
+     #+END_EXAMPLE
+
+     : 下面操作的sudo是必要的,毕竟用户需要是root才可以!
+     形成根目录结构:
+     #+BEGIN_EXAMPLE
+      先在Ubuntu主机环境下，形成目录结构，里面存放的文件和目录与单板上运行所需要的目录结构完全一样，然后再打包成镜像（在开发板看来就是SD卡），这个临时的目录结构称为根目录
+      1.  创建rootfs目录（根目录），根文件系统内的文件全部放到这里
+      sudo mkdir -p rootfs/{dev,etc/init.d,lib}
+
+      2. 拷贝busybox命令到根目录下
+      sudo cp busybox-1.20.2/_install/* -r rootfs/
+
+      3. 从工具链中拷贝运行库到lib目录下
+      sudo cp -P /usr/arm-linux-gnueabi/lib/* rootfs/lib/
+
+      4. 创建4个tty端终设备
+      sudo mknod rootfs/dev/tty1 c 4 1
+      sudo mknod rootfs/dev/tty2 c 4 2
+      sudo mknod rootfs/dev/tty3 c 4 3
+      sudo mknod rootfs/dev/tty4 c 4 4
+     #+END_EXAMPLE
+
+     制作根文件系统镜像
+     #+BEGIN_EXAMPLE
+      1. 生成32M大小的镜像 
+      dd if=/dev/zero of=a9rootfs.ext3 bs=1M count=32
+
+      2. 格式化成ext3文件系统
+      mkfs.ext3 a9rootfs.ext3
+     #+END_EXAMPLE
+
+     将文件拷贝到镜像中
+     #+BEGIN_EXAMPLE
+      sudo mkdir tmpfs
+      sudo mount -t ext3 a9rootfs.ext3 tmpfs/ -o loop
+      sudo cp -r rootfs/*  tmpfs/
+      sudo umount tmpfs
+     #+END_EXAMPLE
+
+**** 系统启动运行
+
+     : 这里是个例子,可以自己以后扩展调试
+
+     #+BEGIN_EXAMPLE
+     qemu-system-arm -M vexpress-a9 -m 512M -kernel /path/to/kernel/dir/arch/arm/boot/zImage -dtb  /path/to/kernel/dir/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append "root=/dev/mmcblk0  console=ttyAMA0" -sd a9rootfs.ext3
+     #+END_EXAMPLE
+
+** QEMU
+
+*** Q:如何退出qemu虚拟程序?
+
+    A: 方法.. Ctrl-A + x
+
+** 好文档链接
+
+   搭建环境文档\\
+   http://blog.csdn.net/linyt/article/details/42504975 (以这个为主!)\\
+   http://www.linuxidc.com/Linux/2015-07/119764.htm \\
+
+   linuxrc无法使用的分析\\
+   http://blog.csdn.net/charliewangg12/article/details/42030235 \\
+   : 一般时候都是因为busybox的编译方法不对导致的,需要添加交叉编译的宏才可以!
+
+   busybox编译报错,缺少头文件<sys/resource.h> ,放到libbb.h中\\
+   http://www.mamicode.com/info-detail-1597117.html\\
+
