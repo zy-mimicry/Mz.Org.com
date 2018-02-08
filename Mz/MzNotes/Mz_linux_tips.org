@@ -94,6 +94,18 @@
 
     #+END_EXAMPLE
 
+** Q: 重复上一次的终端命令
+
+*** A: 一般我们使用shell提供的 _!!_ 命令来完成
+
+    : 这里提供一个小技巧,还可以配合vim等命令来使用,当然,xargs也是可以完成的
+
+    step1. find Documentation/ -name "Changes"
+    step2. vim `!!`
+
+** Q: linux下创建多个目录项的技巧,其实是正则的使用.
+   
+*** A: 简单的方法如: mkdir rootfs/{dev,etc/init.d}
      
 * Linux使用中常见的问题分析和总结
   

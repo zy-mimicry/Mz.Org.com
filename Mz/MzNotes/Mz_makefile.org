@@ -4,7 +4,7 @@
 
 * Mz系列Makefile
 
-** 引用网上的万能Makefile
+** 引用网上的万能Makefile(应用类)
 
    #+BEGIN_SRC makefile
 ####################################################

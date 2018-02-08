@@ -1,0 +1,56 @@
+#+TITLE: Purne Linux Kernel
+#+DATE: <2018-02-08 四>
+
+: 这篇文章主要介绍如何裁剪和编译内核
+
+** 裁剪内核
+
+** 编译内核
+
+*** kernle-makefile中的伪指令
+
+*** 编译完整内核(全编)
+
+
+*** 编译模块
+
+**** 单独编译内核的模块
+
+     之前肯定要编译过内核的,如果不是请编译完成的内核.
+
+     来个例子:
+     : make CONFIG_DRM_VMWGFX=m -C /home/dange/tmp/linux-4.8.0 M=/home/dange/tmp/linux-4.8.0/drivers/gpu/drm/vmwgfx modules
+     
+     简单的写:
+     : make CONFIG_DEMO_TEST=m -C . M=drivers/char/ modules
+
+*** 不基于源码,而基于内核树编译的方法
+
+    : 这个和上面单编内核模块很像,只不过在外部而已,并且要自己实现一个makefile
+    
+**** 依赖内核树,在源码外构建模块的万能makefile
+     
+     #+BEGIN_SRC makefile
+     ifneq ($(KERNELRELEASE),)
+     obj-m := hello.o
+     else
+     KERNELDIR ?= /lib/modules/$(shell uname -r)/build
+     PWD := $(shell pwd)
+     default:
+     $(MAKE) -C $(KERNELDIR) M=$(PWD) modules
+     endif
+     #+END_SRC
+
+** 好文章链接
+
+   linux内核裁剪文件的解释:\\
+   http://blog.csdn.net/a746742897/article/details/52247292\\
+
+   linux makefile伪指令简单介绍:\\
+   http://blog.csdn.net/leon1741/article/details/54846170\\
+   http://blog.csdn.net/sidely/article/details/40296745\\
+
+   linux关于menuconfig使用的介绍:\\
+   http://blog.csdn.net/a746742897/article/details/52243980\\
+
+

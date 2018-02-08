@@ -2,10 +2,11 @@
 
 : 这篇文档主要介绍的内容
 #+BEGIN_EXAMPLE
+0. 如何查看内核源码
 1. 内核文档导航和切入的技巧
-2. 内核相关的辅助链接内容
-3. 内核代码定位的正则技巧和方法
-4. 特定代码位置简介
+2. 内核代码定位的正则技巧和方法
+3. 特定代码位置简介
+4. 内核相关的辅助链接内容
 #+END_EXAMPLE
 
 ** =Description := 如何查看内核源码?
@@ -18,7 +19,7 @@
     3. 相关模块的Kconfig
     4. 相关模块的Makefile
 
-** =Description := Linux源码查看切入点分析
+** =Description := Linux源码查看切入点分析方法
 
 *** _Thinking :_ 下面记录一下如何开始查看linux内核源码
 
@@ -74,8 +75,12 @@
     linux完成变量的定义在:
     <linux/completion.h>
 
-    
+    linux内核编译文档:
+    Documentation/kbuild/
 
+    编译内核的依赖工具文档位置:
+    Documentation/Changes
+    
 ** =Description := Linux话题相关链接
 
 *** _Thinking :_ 记录linux内核常用链接

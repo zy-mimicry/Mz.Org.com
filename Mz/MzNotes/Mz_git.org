@@ -26,6 +26,16 @@
    #+END_EXAMPLE
 
    #+BEGIN_SRC sh
+   #T:
    git checkout -b [新建本地分支名] [远程仓库名]/[远程分支名]
    #+END_SRC
 
+
+** git show
+
+   D: 如何查看某个文件的某次提交快照?
+
+   T: 常用方法
+   #+BEGIN_SRC sh
+   git show [commit id] [file]
+   #+END_SRC

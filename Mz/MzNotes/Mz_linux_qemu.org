@@ -177,7 +177,77 @@
      qemu-system-arm -M vexpress-a9 -m 512M -kernel /path/to/kernel/dir/arch/arm/boot/zImage -dtb  /path/to/kernel/dir/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append "root=/dev/mmcblk0  console=ttyAMA0" -sd a9rootfs.ext3
      #+END_EXAMPLE
 
+**** 使用NFS文件系统(这个是开发的改进,很重要)
+
+     : 如果自定义的话,每次都需要重新更新根文件系统!
      
+     摘录内容:
+     #+BEGIN_EXAMPLE
+      nfsroot:
+
+      + kernel client:
+
+      1. enable nfs client support 
+
+          - CONFIG_NFS_FS
+          - CONFIG_NFS_V3
+          - CONFIG_NFS_V4
+          - CONFIG_ROOT_NFS
+
+      2. enable kernel ip auto configure 
+
+          IP: kernel level autoconfiguration
+          - CONFIG_IP_PNP
+          - CONFIG_IP_PNP_DHCP
+
+      3. set kernel cmdline 
+      CONFIG_CMDLINE="console=ttyFIQ0 androidboot.console=ttyFIQ0 init=/sbin/init root=/dev/nfs nfsroot=192.168.11.197:/usr/src/nfsroot,v3,tcp nfsrootdebug ip=dhcp"
+      
+      + server:
+
+      1. install nfs-utils 
+         - sudo apt-get install nfs-kernel-server
+
+      2. export path 
+
+      add
+
+      /usr/src/nfsroot	*(rw,no_root_squash,no_subtree_check)
+
+      to '/etc/exports'
+
+      3. start nfsd 
+
+      /etc/init.d/nfs start
+     
+     #+END_EXAMPLE
+
+     
+     常见错误:
+     #+BEGIN_EXAMPLE
+     yang.zheng@U-yang:~/mzlinux/linux-4.4.95$ /etc/init.d/nfs-kernel-server start
+      mount: only root can do that
+       * Exporting directories for NFS kernel daemon...                                                                                                              exportfs: Failed to stat /data/nishome/td/yang.zheng/mzlinux/nfs_rootfs: No such file or directory
+      exportfs: could not open /var/lib/nfs/.etab.lock for locking: errno 13 (Permission denied)
+      exportfs: can't lock /var/lib/nfs/etab for writing
+      exportfs: could not open /var/lib/nfs/.xtab.lock for locking: errno 13 (Permission denied)
+      exportfs: can't lock /var/lib/nfs/xtab for writing
+                                                                                                                                                              [ OK ]
+       * Starting NFS kernel daemon                                                                                                                                  rpc.nfsd: Unable to access /proc/fs/nfsd errno 2 (No such file or directory).
+      Please try, as root, 'mount -t nfsd nfsd /proc/fs/nfsd' and then restart rpc.nfsd to correct the problem
+     #+END_EXAMPLE
+     解决方案:
+     mount -t nfsd nfsd /proc/fs/nfsd
+     
+     手动挂载proc,sysfs文件系统:\\
+     http://blog.csdn.net/liuwei000000/article/details/23050213
+
+     只读文件系统的问题: Read-only file system
+     解决方案:\\
+     http://blog.csdn.net/u010839779/article/details/77062347\\
+
+     cmd: mount -o remount rw /
+
 ** 使用新版本内核
 
    : 目前已经测试成功
@@ -214,3 +284,9 @@
 
    linux内核版本下载地址:\\
    https://www.kernel.org/pub/linux/kernel/\\
+
+   改进QEMU,便利开发:\\
+   http://cache.baiducontent.com/c?m=9f65cb4a8c8507ed4fece763105392230e54f73d678b975f2482c25f93130a1c187b9de07b655a19d3c77f6316af3f5fe9ed3573320124b18cc8ff109be4866d72c8713b676df55662d80ed9ca5154c037912aaaf846a0adf14284dea6c4ac2744ba56120980e78a2a5e4f9628ba033093b1e84d022b66ad9d34728c2d&p=c478cb16d9c11bfa1bbd9b7d0d1595&newp=c67c8916d9c111a05bed9731475fcb231610db2151d4da106b82c825d7331b001c3bbfb42325130ed7c77b6d05a54a5ceff036733d012ba3dda5c91d9fb4c57479&user=baidu&fm=sc&query=%CA%B9%D3%C3QEMU%BF%AA%B7%A2linux%C7%FD%B6%AF&qid=e223744200034781&p1=1
+
+   软件开发程序员博客文章收藏网:\\
+   http://www.programgo.com/\\
