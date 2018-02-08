@@ -68,6 +68,14 @@
     linux队列的实现位置:
     <linux/kfifo.h>
 
+    linux自旋锁是和特定体系结构相关的:
+    <asm/spinlock.h>
+
+    linux完成变量的定义在:
+    <linux/completion.h>
+
+    
+
 ** =Description := Linux话题相关链接
 
 *** _Thinking :_ 记录linux内核常用链接

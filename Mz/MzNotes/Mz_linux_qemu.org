@@ -101,7 +101,7 @@
      #+END_EXAMPLE
      
 
-**** 下载、编译和安装busybox
+**** 编译和安装busybox
 
      : 注意编译出来的busybox是给板子用的,要加宏!
 
@@ -177,6 +177,19 @@
      qemu-system-arm -M vexpress-a9 -m 512M -kernel /path/to/kernel/dir/arch/arm/boot/zImage -dtb  /path/to/kernel/dir/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append "root=/dev/mmcblk0  console=ttyAMA0" -sd a9rootfs.ext3
      #+END_EXAMPLE
 
+     
+** 使用新版本内核
+
+   : 目前已经测试成功
+
+*** 目前使用的工具和内核的版本
+
+    主要内容:
+    1. linux内核版本: 4.4.95
+    2. busybox版本: busybox-1.27.1
+    3. QEMU版本: qemu-2.11.0
+    4. 交叉编译工具链: ubuntu-14.04 包库中的 arm-linux-gnueabi
+
 ** QEMU
 
 *** Q:如何退出qemu虚拟程序?
@@ -196,3 +209,8 @@
    busybox编译报错,缺少头文件<sys/resource.h> ,放到libbb.h中\\
    http://www.mamicode.com/info-detail-1597117.html\\
 
+   QEMU官网下载地址:\\
+   https://www.qemu.org/download/\\
+
+   linux内核版本下载地址:\\
+   https://www.kernel.org/pub/linux/kernel/\\
