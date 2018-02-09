@@ -222,6 +222,9 @@
      
      #+END_EXAMPLE
 
+     测试NFS是否成功的方法:
+     1. sudo mount -t nfs localhost:/path/to/nfs_rootfs /mnt (尝试挂载)
+     2. showmount -e (查看分配的NFS文件目录)
      
      常见错误:
      #+BEGIN_EXAMPLE
@@ -247,6 +250,7 @@
      http://blog.csdn.net/u010839779/article/details/77062347\\
 
      cmd: mount -o remount rw /
+
 
 ** 使用新版本内核
 
@@ -290,3 +294,4 @@
 
    软件开发程序员博客文章收藏网:\\
    http://www.programgo.com/\\
+   
