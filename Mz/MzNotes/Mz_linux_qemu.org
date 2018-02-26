@@ -251,7 +251,6 @@
 
      cmd: mount -o remount rw /
 
-
 ** 使用新版本内核
 
    : 目前已经测试成功
