@@ -1,0 +1,97 @@
+#+TITLE: Linux Mini Rootfs
+
+** Linux根文件系统的基本结构
+
+   根据FHS的行业标准,分析每一个顶层目录的必要性,然后取舍.
+
+   FHS标准目录结构:
+   | Name | Content                                                    |
+   |------+------------------------------------------------------------|
+   | bin  | 必要的用户命令(二进制文件)                                 |
+   | sbin | 必要的系统管理员命令(二进制文件)                           |
+   | lib  | 必要的链接库,例如c链接库,或内核模块                        |
+   | dev  | 设备文件和其他特殊文件                                     |
+   | etc  | 系统配置文件,包括启动文件                                  |
+   | proc | 用来提供内核与进程信息的虚拟文件系统                       |
+   | tmp  | 暂时性的文件                                               |
+   | boot | 引导加载程序使用的静态文件                                 |
+   | home | 用户主目录,包括供服务账户所使用的主目录,例如FTP            |
+   | mnt  | 安装点,用于临时安装文件系统                                |
+   | opt  | 附加的软件套件                                             |
+   | root | root用户的主目录                                           |
+   | usr  | 在第二层包含对大多数用户都有大量应用程序和文件,包括X服务器 |
+   | var  | 监控程序和工具程序所有存放的可变数据                       |
+   
+
+   为多用户提供扩展环境的所有目录:
+   /home /mnt /root /opt
+
+   有关应用软件运行的相关目录:
+   /var /tmp
+
+   根据引导加载情况的不同可以选择:
+   /boot
+
+   必不可少的:
+   /bin /sbin /lib /etc /dev /proc /usr 
+
+   /usr 的目录都有 /bin /lib /sbin 这个内容是按照一定规则定义的,具体可以看标准.
+   /var 和usr也是差不多,有些目录有差异
+
+   使用的脚本:
+   #+BEGIN_SRC sh
+   #! /bin/sh
+
+   TOP=./
+
+   cd $(TOP)/rootfs
+   echo "Make some dir for root fs..."
+   mkdir bin sbin lib etc dev proc tmp usr var
+   chmod 1777 tmp #开启sticky位,只有建立它的用户有权删除,其他的用户不行.root例外
+
+   mkdir usr/bin usr/sbin usr/lib
+
+   mkdir var/lib var/lock var/log var/run var/tmp
+   chmod 1777 var/tmp
+   echo "Make done."
+   #+END_SRC
+   
+** 链接库
+
+   动态库的分类:以glibc为例
+   1. 实际的共享链接库
+      : libLIBRARY_NAME-GLIBC_VERSION.so LIBRARY_NAME是库名字, GLIBC_VERSION对应的glibc套件的版本. 如:glibc 2.2.3 的数学链接库 libm-2.2.3.so
+   2. 主修订版本的符号链接
+      : 主修订版本符号链接格式 libLIBRARY_NAME.so.MAJOR_REVISION_VERSION MAJOR_REVISION_VERSION 是链接库的主修订版本号,符号链接的名称例子:libc.so.6
+   3. 与版本无关的符号链接指向主修订版本的符号链接
+      : 为需要链接特定链接库的所有应用程序提供一个通用的条目. 样例: libLABRARY_NAME.so 如: libm.so 指向 libm.so.6 ,而libm.so.6 指向 libm-2.2.3.so
+   4. 静态链接库包文件
+      : 选择以静态链接链接库文件的应用程序,会使用这些包文件. 格式: libLABRARY_NAME.a 如: libdl.a
+   5. 当然,可能在lib下面存在如,crti.o crtl.o的中间目标文件.可以先不用管.
+
+
+   嵌入式中使用的库一般有两个:
+   1. 实际共享的链接库.
+   2. 主修订版本的符号链接库
+
+
+   Note: 所以我们需要复制动态库和相应的符号链接.
+
+   除了库的实体文件和链接文件,我们还需要复制动态链接器和它的符号链接! 
+   Note: gnu的链接器命名原则和架构有关.
+   : 如: ld-linux.so.MAJOR_REVISION_VERSION arm架构
+   : 如: ld.so.MAJOR_REVISION_VERSION powerpc架构
+
+   在往根文件系统中复制glibc库文件之前,需要了解自己的应用程序需要哪些库再行动.
+   判断的方法:
+   1. 有些库是必要的,那必须复制(如:libc, ld..),有些是可选的,可以根据自己的需求选择.具体可以参考书上的内容,或者标准.
+   2. ldd命令可以查看应用所需的动态链接库.这个ldd可能需要的是目标平台编译出来的工具,主机的并不一定好使. 
+   3. 另一个比较常用的是readelf工具
+
+      
+   了解后,编写脚本:
+   #+BEGIN_SRC sh
+   #!/bin/sh
+   
+   
+   #+END_SRC

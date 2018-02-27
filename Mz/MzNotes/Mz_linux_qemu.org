@@ -272,6 +272,8 @@
 
 ** 自主构建嵌入式根文件系统
 
+   根据名著<构建嵌入式linux系统>,写一个自己的操作实践笔记.
+   Jump to : file:./Mz_linux_mini_rootfs.org
 
 ** 好文档链接
 
