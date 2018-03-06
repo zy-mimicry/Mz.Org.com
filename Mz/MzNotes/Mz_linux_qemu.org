@@ -303,6 +303,15 @@
    QEMU模拟vexpress开发板的资料:\\
    http://blog.csdn.net/aggresss/article/details/54942848 \\
 
-   这个人可以参考他的文档,有些意思:\\
-   https://github.com/aggresss/LKDemo\\
+   这个人可以参考他的文档,有些意思:(主要就是开发板)\\
+   https://github.com/aggresss/LKDemo \\
+   http://blog.csdn.net/aggresss/article/details/74834155 \\
+
+   QEMU官网:\\
+   https://www.qemu.org/\\
+
+   LFS抓系统官网:\\
+   http://www.linuxfromscratch.org/ \\
+
+   
    
