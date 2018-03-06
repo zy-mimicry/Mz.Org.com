@@ -299,4 +299,10 @@
 
    软件开发程序员博客文章收藏网:\\
    http://www.programgo.com/\\
+
+   QEMU模拟vexpress开发板的资料:\\
+   http://blog.csdn.net/aggresss/article/details/54942848 \\
+
+   这个人可以参考他的文档,有些意思:\\
+   https://github.com/aggresss/LKDemo\\
    
