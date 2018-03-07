@@ -407,6 +407,20 @@
 
 ** 内存泄漏的模拟和调试
 
+   内核内存泄漏问题: \\
+   http://blog.csdn.net/wuxiwang/article/details/46363507 \\
+   http://blog.csdn.net/CJF_iceKing/article/details/32315565 \\
+
+   ps使用和案例: \\
+   http://blog.csdn.net/fly910905/article/details/79031394 \\
+   https://www.cnblogs.com/sparkbj/p/6148817.html \\
+    
+   kdump与crash的使用: \\
+   http://blog.csdn.net/zhangskd/article/details/38084337 \\
+
+   
+
+
 ** 死锁问题的模拟和调试
 
 ** 数据库的基本使用
@@ -418,3 +432,6 @@
 ** 编程能力的基本练习(基础和算法)
 
 ** 针对性项目的开发和实践
+
+** 内核调试工具的使用
+
