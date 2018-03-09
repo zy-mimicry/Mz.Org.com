@@ -49,21 +49,42 @@
      下载方法:
      wget http://www.busybox.net/downloads/busybox-1.20.2.tar.bz2 (固定版本,验证可用)
 
+**** u-boot
+
+     : 使用u-boot-2017.01.tar.bz2这个版本完成下载
+     
+     下载的位置:
+     http://ftp.denx.de/pub/u-boot/ (当然这个是可以替换的,如果喜欢使用最新的也是可以的)
+
 *** 搭建步骤
 
     : 当然了,这里的搭建步骤就是主要配置和编译,到最后的运行.
 
 **** 编译内核
      
-     : 生成vexpress开发板子的config文件
+     : 编译linux内核提供两种差不多的方式,第二种比较简单,也可以集成到一个脚本中
+
+     生成vexpress开发板子的config文件
      #+BEGIN_EXAMPLE
-     配置
+     配置:
      make CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm vexpress_defconfig
-     编译
+     编译:
      make CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm
-     产物
+     产物:
      arch/arm/boot/zImage
      #+END_EXAMPLE
+
+     也可以这样:
+     #+BEGIN_EXAMPLE
+      export ARCH=arm 
+      export CROSS_COMPILE=arm-linux-gnueabi-
+      make vexpress_defconfig
+      make zImage
+      make modules
+      make dtbs
+      编译后生成 在 arch/arm/boot 目录下生成 zImage 文件，则说明编译成功
+     #+END_EXAMPLE
+
      
 **** 编译安装QEMU
      
@@ -161,12 +182,46 @@
       mkfs.ext3 a9rootfs.ext3
      #+END_EXAMPLE
 
+     Note:
+     制作磁盘镜像的方法这里再提供一种:
+     qemu-img create -f raw vexpress.img 100M
+     目的就是生成一个vexpress.img的虚拟镜像文件，为了更好的兼容性选择 raw 格式的镜像。
+
      将文件拷贝到镜像中
      #+BEGIN_EXAMPLE
       sudo mkdir tmpfs
       sudo mount -t ext3 a9rootfs.ext3 tmpfs/ -o loop
       sudo cp -r rootfs/*  tmpfs/
       sudo umount tmpfs
+     #+END_EXAMPLE
+
+     这里还是提供一个链接比较好:\\
+     http://blog.csdn.net/aggresss/article/details/54946438\\
+     这篇文章中介绍的内容,可以满足建立基础的跟文件系统
+
+
+**** 编译安装u-boot
+
+     : 这里提供一个例子
+     
+     解压完成压缩包后
+
+     编译命令指令流程:
+     #+BEGIN_EXAMPLE
+     export ARCH=arm 
+     export CROSS_COMPILE=arm-linux-gnueabi-
+     make vexpress_ca9x4_defconfig
+     make
+     编译完成后，如果目录下生成 u-boot 文件，则说明编译成功
+     #+END_EXAMPLE
+
+     简单的验证:(能启动就OK)
+     #+BEGIN_EXAMPLE
+     qemu-system-arm \
+     -M vexpress-a9 \
+     -nographic \
+     -m 512M \
+     -kernel u-boot
      #+END_EXAMPLE
 
 **** 系统启动运行
@@ -177,7 +232,30 @@
      qemu-system-arm -M vexpress-a9 -m 512M -kernel /path/to/kernel/dir/arch/arm/boot/zImage -dtb  /path/to/kernel/dir/arch/arm/boot/dts/vexpress-v2p-ca9.dtb -nographic -append "root=/dev/mmcblk0  console=ttyAMA0" -sd a9rootfs.ext3
      #+END_EXAMPLE
 
-**** 使用NFS文件系统(这个是开发的改进,很重要)
+**** 使用NFS文件系统共享文件(验证过,并且可行!)
+     
+     :这部分的内容验证过,并且可行,而且可以有效的提高开发效率.
+     
+     http://blog.csdn.net/aggresss/article/details/54948143 (参考文档) \\
+
+     采用tap的方式使虚拟机和主机通讯.
+
+     当虚拟机只需要与主机通讯,并不需要与外界网络通讯的时候,不需要建立网桥,创建一个tap就可以了.
+     
+     Note:摘录
+     #+BEGIN_EXAMPLE
+       这里说一下Linux中tun/tap。
+       tun/tap 驱动程序实现了虚拟网卡的功能，tun表示虚拟的是点对点设备，tap表示虚拟的是以太网设备，这两种设备针对网络包实施不同的封装。
+       利用tun/tap 驱动，可以将tcp/ip协议栈处理好的网络分包传给任何一个使用tun/tap驱动的进程，由进程重新处理后再发到物理链路中。
+     #+END_EXAMPLE
+
+     Note: 也许主机并没有在内核中打开对虚拟网卡的支持,我们可能需要使用下面的方法自己添加,但是目前来看都是内置到内核中,不是以模块的方式存在的.
+
+     验证主机是否支持tun/tap,可以直接查看/dev/net/tun, 网上的内容都太老了,现在的tun/tap已经不是以模块的方式使用了,而是集成在镜像中了.
+
+     问题: 需要重新编译内核,到/usr/src/linux目录找到uname -r返回的内核源码,然后sudo make menuconfig ,这里需要sudo,否则提示找不到ncurses库文件.
+
+**** 使用NFS文件系统作为根文件系统(这个是开发的改进,很重要,可惜并不好使,但是也做个笔记用来对比.)
 
      : 如果自定义的话,每次都需要重新更新根文件系统!
      
@@ -262,6 +340,7 @@
     2. busybox版本: busybox-1.27.1
     3. QEMU版本: qemu-2.11.0
     4. 交叉编译工具链: ubuntu-14.04 包库中的 arm-linux-gnueabi
+    5. u-boot版本: u-boot-2017.01.tar.bz2
 
 ** QEMU
 
@@ -294,9 +373,6 @@
    linux内核版本下载地址:\\
    https://www.kernel.org/pub/linux/kernel/\\
 
-   改进QEMU,便利开发:\\
-   http://cache.baiducontent.com/c?m=9f65cb4a8c8507ed4fece763105392230e54f73d678b975f2482c25f93130a1c187b9de07b655a19d3c77f6316af3f5fe9ed3573320124b18cc8ff109be4866d72c8713b676df55662d80ed9ca5154c037912aaaf846a0adf14284dea6c4ac2744ba56120980e78a2a5e4f9628ba033093b1e84d022b66ad9d34728c2d&p=c478cb16d9c11bfa1bbd9b7d0d1595&newp=c67c8916d9c111a05bed9731475fcb231610db2151d4da106b82c825d7331b001c3bbfb42325130ed7c77b6d05a54a5ceff036733d012ba3dda5c91d9fb4c57479&user=baidu&fm=sc&query=%CA%B9%D3%C3QEMU%BF%AA%B7%A2linux%C7%FD%B6%AF&qid=e223744200034781&p1=1
-
    软件开发程序员博客文章收藏网:\\
    http://www.programgo.com/\\
 
@@ -313,5 +389,6 @@
    LFS抓系统官网:\\
    http://www.linuxfromscratch.org/ \\
 
-   
-   
+   linux kernel 命令行参数 rootwait 的分析:\\
+   http://blog.csdn.net/tiantao2012/article/details/53036828\\
+
