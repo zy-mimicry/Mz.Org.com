@@ -3,7 +3,7 @@
 : 这篇文档主要介绍的内容
 #+BEGIN_EXAMPLE
 1. linux简单操作相关的技巧总结
-2. linux使用中常见的问题分析和总结
+2. linux操作系统使用中常见的问题分析和总结
 #+END_EXAMPLE
 
 * Linux简单操作相关的技巧和总结
