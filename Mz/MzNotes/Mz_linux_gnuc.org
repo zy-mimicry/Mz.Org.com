@@ -1,4 +1,7 @@
 #+TITLE: Linux Gnu C 内容总结
 #+DATE: <2018-02-11 日>
 
+: 这篇文章主要讲解关于gnuc扩展C语言的一些知识点.
 
+** typeof
+   
